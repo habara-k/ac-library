@@ -12,8 +12,8 @@ struct HeavyLightDecomposition {
     G &g;
     vector< int > sz, in, out, head, rev, par;
 
-    explicit HeavyLightDecomposition(G &g) :
-            g(g), sz(g.size()), in(g.size()), out(g.size()), head(g.size()), rev(g.size()), par(g.size()) {
+    explicit HeavyLightDecomposition(G &g_) :
+            g(g_), sz(g.size()), in(g.size()), out(g.size()), head(g.size()), rev(g.size()), par(g.size()) {
         build();
     }
 
