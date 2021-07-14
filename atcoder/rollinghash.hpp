@@ -1,6 +1,8 @@
 #ifndef ATCODER_ROLLINGHASH_HPP
 #define ATCODER_ROLLINGHASH_HPP 1
 
+#include <random>
+
 namespace atcoder {
 
 using namespace std;
@@ -11,7 +13,7 @@ struct RollingHash {
 
     template<typename S>
     RollingHash(const S &s, u64 base) {
-        int n = s.size();
+        int n = int(s.size());
         hash.assign(n+1, 0);
         pow.assign(n+1, 1);
         for (int i = 0; i < n; ++i) {
@@ -34,13 +36,18 @@ struct RollingHash {
 
 private:
     vector<u64> hash, pow;
-    static const u64 MOD = (1ul << 61) - 1;
 
-    static u64 mul(u128 a, u128 b) {
-        u128 t = a * b;
+    static const u64 MOD = (1ul << 61) - 1;
+    static const u64 MASK31 = (1UL << 31) - 1;
+
+    static u64 mul(u64 a, u64 b) {
+        u64 au = a >> 31, ad = a & MASK31;
+        u64 bu = b >> 31, bd = b & MASK31;
+        u64 mid = ad * bu + au * bd;
+        u64 midu = mid >> 31, midd = mid & MASK31;
+        u64 t = 2 * (au * bu + midu) + (midd << 31) + ad * bd;
         t = (t >> 61) + (t & MOD);
-        if (t >= MOD) t -= MOD;
-        return t;
+        return t >= MOD ? t - MOD : t;
     }
 };
 
