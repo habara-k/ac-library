@@ -3,6 +3,8 @@
 
 namespace atcoder {
 
+using namespace std;
+
 // https://opt-cp.com/fps-fast-algorithms
 template<class T>
 struct FormalPowerSeries : vector<T> {
