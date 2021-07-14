@@ -28,7 +28,6 @@ int main()
     }
 
     HeavyLightDecomposition hld(G);
-    hld.build();
 
     lazy_segtree<S, op, e, ll, mapping, composition, id> segt(vector<S>(n, S{0, 1}));
 
@@ -37,11 +36,11 @@ int main()
         int c; cin >> c;
         if (c == 0) {
             int v, w; cin >> v >> w;
-            hld.update(0, v, [&](int l, int r) { segt.apply(l, r, w); }, true);
+            hld.apply(0, v, [&](int l, int r) { segt.apply(l, r, w); }, true);
         }
         if (c == 1) {
             int v; cin >> v;
-            cout << hld.query(0, v, e(),
+            cout << hld.prod(0, v, e(),
                       [&](int l, int r) { return segt.prod(l, r); },
                       [&](S a, S b) { return op(a, b); }, true).sum << endl;
         }

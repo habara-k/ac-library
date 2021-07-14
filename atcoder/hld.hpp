@@ -1,18 +1,61 @@
 #ifndef ATCODER_HLD_HPP
 #define ATCODER_HLD_HPP 1
 
+namespace atcoder {
+
 using namespace std;
 
 // Reference: https://ei1333.github.io/luzhiled/snippets/tree/heavy-light-decomposition.html
 
+template< typename G >
 struct HeavyLightDecomposition {
-    using G = vector<vector<int>>;
     G &g;
     vector< int > sz, in, out, head, rev, par;
 
-    HeavyLightDecomposition(G &g_) :
-            g(g_), sz(g.size()), in(g.size()), out(g.size()), head(g.size()), rev(g.size()), par(g.size()) {}
+    explicit HeavyLightDecomposition(G &g_) :
+            g(g_), sz(g.size()), in(g.size()), out(g.size()), head(g.size()), rev(g.size()), par(g.size()) {
+        build();
+    }
 
+    int la(int v, int k) {
+        while(1) {
+            int u = head[v];
+            if(in[v] - k >= in[u]) return rev[in[v] - k];
+            k -= in[v] - in[u] + 1;
+            v = par[u];
+        }
+    }
+
+    int lca(int u, int v) {
+        for(;; v = par[head[v]]) {
+            if(in[u] > in[v]) swap(u, v);
+            if(head[u] == head[v]) return u;
+        }
+    }
+
+    template< typename T, typename Q, typename F >
+    T prod(int u, int v, const T &id, const Q &q, const F &f, bool edge = false) {
+        // Require: f(a, b) == f(b, a)
+        T s = id;
+        for(;; v = par[head[v]]) {
+            if(in[u] > in[v]) swap(u, v);
+            if(head[u] == head[v]) break;
+            s = f(s, q(in[head[v]], in[v] + 1));
+        }
+        return f(s, q(in[u] + edge, in[v] + 1));
+    }
+
+    template< typename Q >
+    void apply(int u, int v, const Q &q, bool edge = false) {
+        for(;; v = par[head[v]]) {
+            if(in[u] > in[v]) swap(u, v);
+            if(head[u] == head[v]) break;
+            q(in[head[v]], in[v] + 1);
+        }
+        q(in[u] + edge, in[v] + 1);
+    }
+
+private:
     void dfs_sz(int idx, int p) {
         par[idx] = p;
         sz[idx] = 1;
@@ -41,44 +84,8 @@ struct HeavyLightDecomposition {
         int t = 0;
         dfs_hld(0, -1, t);
     }
-
-    int la(int v, int k) {
-        while(1) {
-            int u = head[v];
-            if(in[v] - k >= in[u]) return rev[in[v] - k];
-            k -= in[v] - in[u] + 1;
-            v = par[u];
-        }
-    }
-
-    int lca(int u, int v) {
-        for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
-            if(head[u] == head[v]) return u;
-        }
-    }
-
-    template<typename T, typename Q, typename F>
-    T query(int u, int v, const T &id, const Q &q, const F &f, bool edge = false) {
-        // Require: f(a, b) == f(b, a)
-        T s = id;
-        for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
-            if(head[u] == head[v]) break;
-            s = f(s, q(in[head[v]], in[v] + 1));
-        }
-        return f(s, q(in[u] + edge, in[v] + 1));
-    }
-
-    template<typename Q>
-    void update(int u, int v, const Q &q, bool edge = false) {
-        for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
-            if(head[u] == head[v]) break;
-            q(in[head[v]], in[v] + 1);
-        }
-        q(in[u] + edge, in[v] + 1);
-    }
 };
+
+}  // namespace atcoder
 
 #endif  // ATCODER_HLD_HPP
