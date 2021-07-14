@@ -195,7 +195,7 @@ struct FormalPowerSeries : vector<T> {
                 t.resize(m);
                 t /= 2*m;
             }
-            else { // この場合分けをしても数パーセントしか速くならない
+            else { // This division of cases will only speed things up by a few percent.
                 F g1(g.begin() + m/2, g.end());
                 F s1(t.begin() + m/2, t.end());
                 t.resize(m/2);
