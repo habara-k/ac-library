@@ -37,8 +37,8 @@ struct RollingHash {
 private:
     vector<u64> hash, pow;
 
-    static const u64 MOD = (1ul << 61) - 1;
-    static const u64 MASK31 = (1UL << 31) - 1;
+    static const u64 MOD = (1ull << 61) - 1;
+    static const u64 MASK31 = (1ull << 31) - 1;
 
     static u64 mul(u64 a, u64 b) {
         u64 au = a >> 31, ad = a & MASK31;
