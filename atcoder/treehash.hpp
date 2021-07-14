@@ -10,7 +10,7 @@ using namespace std;
 struct TreeHash {
     using u64 = uint64_t;
 
-    TreeHash(const vector<vector<int>>& g, int seed=0) : g(g) {
+    TreeHash(const vector<vector<int>>& g_, int seed=0) : g(g_) {
         int n = int(g.size());
         mt19937 random(seed);
         uniform_int_distribution<u64> dist(2, MOD-2);
