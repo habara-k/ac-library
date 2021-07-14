@@ -9,7 +9,6 @@ using namespace std;
 
 struct RollingHash {
     using u64 = uint64_t;
-    using u128 = __uint128_t;
 
     template<typename S>
     RollingHash(const S &s, u64 base) {
