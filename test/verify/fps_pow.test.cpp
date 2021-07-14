@@ -16,6 +16,5 @@ int main()
     for (auto x : a.pow_inplace(m)) {
         cout << x.val() << endl;
     }
-    cout << "err" << endl;
     return 0;
 }
