@@ -27,12 +27,12 @@ struct FormalPowerSeries : vector<T> {
         return *this;
     }
     F &operator+=(const F &g) {
-        int n = this->size(), m = g.size();
+        int n = (int)this->size(), m = (int)g.size();
         for (int i = 0; i < min(n, m); i++) (*this)[i] += g[i];
         return *this;
     }
     F &operator-=(const F &g) {
-        int n = this->size(), m = g.size();
+        int n = (int)this->size(), m = (int)g.size();
         for (int i = 0; i < min(n, m); i++) (*this)[i] -= g[i];
         return *this;
     }
@@ -100,7 +100,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n)
     F &integ_inplace() {
-        int n = this->size();
+        int n = (int)this->size();
         assert(n > 0);
         if (n == 1) return *this = F{0};
         this->insert(this->begin(), 0);
@@ -116,7 +116,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n)
     F &deriv_inplace() {
-        int n = this->size();
+        int n = (int)this->size();
         assert(n > 0);
         for (int i = 2; i < n; ++i) (*this)[i] *= i;
         this->erase(this->begin());
@@ -143,7 +143,7 @@ struct FormalPowerSeries : vector<T> {
     // O(n log n)
     // https://arxiv.org/abs/1301.5804 (Figure 1, right)
     F &exp_inplace(int d = -1) {
-        int n = this->size();
+        int n = (int)this->size();
         assert(n > 0 && (*this)[0] == 0);
         if (d == -1) d = n;
         assert(d >= 0);
