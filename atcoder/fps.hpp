@@ -1,5 +1,5 @@
 #ifndef ATCODER_FPS_HPP
-#define ATCODER_FPS_HPP
+#define ATCODER_FPS_HPP 1
 
 #include <atcoder/convolution>
 #include <atcoder/modint>
@@ -267,4 +267,4 @@ using fps = FormalPowerSeries<modint998244353>;
 
 }  // namespace atcoder
 
-#endif // ATCODER_FPS_HPP
+#endif  // ATCODER_FPS_HPP
