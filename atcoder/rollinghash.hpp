@@ -11,7 +11,10 @@ struct RollingHash {
     using u64 = uint64_t;
 
     template<typename S>
-    RollingHash(const S &s, u64 base) {
+    explicit RollingHash(const S &s, int seed=0) {
+        mt19937 random(seed);
+        uniform_int_distribution<u64> dist(2, MOD-2);
+        u64 base = dist(random);
         int n = int(s.size());
         hash.assign(n+1, 0);
         pow.assign(n+1, 1);
@@ -25,12 +28,6 @@ struct RollingHash {
     u64 get(int l, int r) const {
         u64 ret = hash[r] + MOD - mul(hash[l], pow[r-l]);
         return ret >= MOD ? ret - MOD : ret;
-    }
-
-    static u64 gen_base() {
-        mt19937 random{random_device{}()};
-        uniform_int_distribution<u64> dist(2, MOD-2);
-        return dist(random);
     }
 
 private:
