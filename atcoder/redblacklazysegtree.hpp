@@ -1,6 +1,7 @@
 #ifndef ATCODER_REDBLACKLAZYSEGTREE_HPP
 #define ATCODER_REDBLACKLAZYSEGTREE_HPP 1
 
+#include <cassert>
 #include <vector>
 
 namespace atcoder {
