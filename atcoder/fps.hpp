@@ -265,6 +265,25 @@ struct FormalPowerSeries : vector<T> {
 
 using fps = FormalPowerSeries<modint998244353>;
 
+template<typename T>
+T bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T> q, long long n) {
+    while (n > 0) {
+        auto q_ = q;
+        for (int i = 1; i < int(q.size()); i += 2) q_[i] *= -1;
+
+        q = convolution(move(q), q_);
+        int i;
+        for (i = 0; 2*i < (int)(q.size()); i++) q[i] = q[2*i];
+        q.resize(i);
+
+        p = convolution(move(p), move(q_));
+        for (i = 0; 2*i + (n&1) < (int)(p.size()); i++) p[i] = p[2*i + (n&1)];
+        p.resize(i);
+        n >>= 1;
+    }
+    return p[0] / q[0];
+}
+
 }  // namespace atcoder
 
 #endif  // ATCODER_FPS_HPP
