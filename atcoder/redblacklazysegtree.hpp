@@ -28,8 +28,8 @@ struct RedBlackLazySegmentTree {
         bool color=B;
         node() = default;
         explicit node(S val) : prd(val) {}
-        node(node *l, node *r, int color) : l(l), r(r), prd(op(l->prd,r->prd)),
-                                            sz(l->sz + r->sz), rnk(l->rnk + l->color), color(color) {}
+        node(node *l_, node *r_, int color_) : l(l_), r(r_), prd(op(l->prd,r->prd)),
+                                            sz(l->sz + r->sz), rnk(l->rnk + l->color), color(color_) {}
     };
     int size() { return size(root); }
     int size(node *p) { return p ? p->sz : 0; }
