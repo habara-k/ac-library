@@ -1,6 +1,7 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/14/ALDS1_14_B"
 
-#include <atcoder/all>
+#include <atcoder/rollinghash>
+#include <iostream>
 
 using namespace atcoder;
 using namespace std;

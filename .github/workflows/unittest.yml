@@ -3,8 +3,7 @@ name: Unittest
 on:
   push:
     branches:
-      - '*'
-  pull_request:
+      - master
 
 jobs:
   gtest:    

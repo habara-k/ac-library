@@ -1,6 +1,10 @@
 #ifndef ATCODER_PERSISTENTSEGTREE_HPP
 #define ATCODER_PERSISTENTSEGTREE 1
 
+#include <cassert>
+
+namespace atcoder {
+
 template<class S, S (*op)(S, S), S (*e)()>
 struct PersistentSegmentTree {
     struct Node {
@@ -66,5 +70,7 @@ private:
                   _prod(t->r, a, b, (l+r)>>1, r));
     }
 };
+
+}  // namespace atcoder
 
 #endif  // ATCODER_PERSISTENTSEGTREE_HPP

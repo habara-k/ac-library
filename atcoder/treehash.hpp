@@ -2,6 +2,7 @@
 #define ATCODER_TREEHASH_HPP 1
 
 #include <atcoder/centroid>
+#include <random>
 
 namespace atcoder {
 

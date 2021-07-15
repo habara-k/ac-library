@@ -1,6 +1,8 @@
 #define PROBLEM "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2821"
 
-#include <atcoder/all>
+#include <atcoder/treehash>
+#include <atcoder/dsu>
+#include <iostream>
 #include <map>
 
 using namespace atcoder;
@@ -49,9 +51,9 @@ int main() {
     }
 
     int ans = 0;
-    auto hash = TreeHash(g2).get();
+    auto hash = TreeHash{g2}.get();
     for (auto &tp : g) {
-        auto h = TreeHash(tp.second).get();
+        auto h = TreeHash{tp.second}.get();
         ans += h == hash;
     }
 

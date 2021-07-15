@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/pow_of_formal_power_series"
 
-#include <atcoder/all>
+#include <atcoder/fps>
+#include <iostream>
 
 using namespace atcoder;
 using namespace std;

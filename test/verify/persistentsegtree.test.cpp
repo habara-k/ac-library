@@ -1,6 +1,9 @@
 #define PROBLEM "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2270"
 
-#include <atcoder/all>
+#include <atcoder/persistentsegtree>
+#include <atcoder/hld>
+#include <iostream>
+#include <vector>
 #include <map>
 
 using namespace atcoder;
