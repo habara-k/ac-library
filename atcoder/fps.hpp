@@ -30,24 +30,24 @@ struct FormalPowerSeries : vector<T> {
         return *this;
     }
     F &operator+=(const F &g) {
-        int n = (int)this->size(), m = (int)g.size();
+        int n = int(this->size()), m = int(g.size());
         for (int i = 0; i < min(n, m); i++) (*this)[i] += g[i];
         return *this;
     }
     F &operator-=(const F &g) {
-        int n = (int)this->size(), m = (int)g.size();
+        int n = int(this->size()), m = int(g.size());
         for (int i = 0; i < min(n, m); i++) (*this)[i] -= g[i];
         return *this;
     }
     F &operator<<=(const int d) {
-        int n = (int)this->size();
+        int n = int(this->size());
         if (d >= n) *this = F(n);
         this->insert(this->begin(), d, 0);
         this->resize(n);
         return *this;
     }
     F &operator>>=(const int d) {
-        int n = (int)this->size();
+        int n = int(this->size());
         this->erase(this->begin(), this->begin() + min(n, d));
         this->resize(n);
         return *this;
@@ -55,7 +55,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n log n)
     F inv(int d = -1) const {
-        int n = (int)this->size();
+        int n = int(this->size());
         assert(n != 0 && (*this)[0] != 0);
         if (d == -1) d = n;
         assert(d >= 0);
@@ -82,7 +82,7 @@ struct FormalPowerSeries : vector<T> {
     // fast: FMT-friendly modulus only
     // O(n log n)
     F &multiply_inplace(const F &g, int d = -1) {
-        int n = (int)this->size();
+        int n = int(this->size());
         if (d == -1) d = n;
         assert(d >= 0);
         *this = convolution(move(*this), g);
@@ -92,7 +92,7 @@ struct FormalPowerSeries : vector<T> {
     F multiply(const F &g, const int d = -1) const { return F(*this).multiply_inplace(g, d); }
     // O(n log n)
     F &divide_inplace(const F &g, int d = -1) {
-        int n = (int)this->size();
+        int n = int(this->size());
         if (d == -1) d = n;
         assert(d >= 0);
         *this = convolution(move(*this), g.inv(d));
@@ -103,7 +103,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n)
     F &integ_inplace() {
-        int n = (int)this->size();
+        int n = int(this->size());
         assert(n > 0);
         if (n == 1) return *this = F{0};
         this->insert(this->begin(), 0);
@@ -119,7 +119,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n)
     F &deriv_inplace() {
-        int n = (int)this->size();
+        int n = int(this->size());
         assert(n > 0);
         for (int i = 2; i < n; ++i) (*this)[i] *= i;
         this->erase(this->begin());
@@ -130,7 +130,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n log n)
     F &log_inplace(int d = -1) {
-        int n = (int)this->size();
+        int n = int(this->size());
         assert(n > 0 && (*this)[0] == 1);
         if (d == -1) d = n;
         assert(d >= 0);
@@ -146,7 +146,7 @@ struct FormalPowerSeries : vector<T> {
     // O(n log n)
     // https://arxiv.org/abs/1301.5804 (Figure 1, right)
     F &exp_inplace(int d = -1) {
-        int n = (int)this->size();
+        int n = int(this->size());
         assert(n > 0 && (*this)[0] == 0);
         if (d == -1) d = n;
         assert(d >= 0);
@@ -235,7 +235,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n log n)
     F &pow_inplace(long long k, int d = -1) {
-        int n = (int)this->size();
+        int n = int(this->size());
         if (d == -1) d = n;
         assert(d >= 0);
         int l = 0;
