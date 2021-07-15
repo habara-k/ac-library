@@ -1,6 +1,8 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/7/DPL/5/DPL_5_B"
 
-#include <atcoder/all>
+#include <atcoder/combination>
+#include <atcoder/modint>
+#include <iostream>
 
 using namespace atcoder;
 using namespace std;

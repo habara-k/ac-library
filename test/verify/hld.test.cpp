@@ -1,6 +1,8 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/5/GRL_5_E"
 
-#include <atcoder/all>
+#include <atcoder/hld>
+#include <atcoder/lazysegtree>
+#include <iostream>
 
 using namespace atcoder;
 using namespace std;

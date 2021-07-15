@@ -1,6 +1,8 @@
 #ifndef ATCODER_HLD_HPP
 #define ATCODER_HLD_HPP 1
 
+#include <vector>
+
 namespace atcoder {
 
 using namespace std;

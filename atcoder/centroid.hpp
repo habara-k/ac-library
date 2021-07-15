@@ -1,6 +1,8 @@
 #ifndef ATCODER_CENTROID_HPP
 #define ATCODER_CENTROID_HPP 1
 
+#include <vector>
+
 namespace atcoder {
 
 using namespace std;
