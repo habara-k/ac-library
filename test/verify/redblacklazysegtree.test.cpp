@@ -2,20 +2,19 @@
 
 #include <atcoder/redblacklazysegtree>
 #include <iostream>
+#include <limits>
 
 using namespace atcoder;
 using namespace std;
 
-using S = int;
-using F = int;
-S op(S a, S b) { return min(a,b); }
-S e() { return numeric_limits<S>::max(); }
-F id() { return numeric_limits<F>::max(); }
-S mapping(F a, S b) {
+int op(int a, int b) { return min(a,b); }
+int e() { return numeric_limits<int>::max(); }
+int id() { return numeric_limits<int>::max(); }
+int mapping(int a, int b) {
     if (a==id()) return b;
     return a;
 }
-F composition(F a, F b) {
+int composition(int a, int b) {
     if (a==id()) return b;
     if (b==id()) return a;
     return b;
@@ -25,13 +24,13 @@ int main() {
     int n, q; cin >> n >> q;
     vector<int> a(n);
     for (int i = 0; i < n; i++) cin >> a[i];
-    RedBlackLazySegmentTree<S,op,e,F,mapping,composition,id,500000> tree;
+    RedBlackLazySegmentTree<int,op,e,int,mapping,composition,id,500000> tree;
     tree.build(a);
     while (q--) {
         int t; cin >> t;
         if (t == 0) {
             int l, r; cin >> l >> r;
-            S val = tree.erase(r);
+            int val = tree.erase(r);
             tree.insert(l, val);
         }
         if (t == 1) {
