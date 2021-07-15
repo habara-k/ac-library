@@ -81,7 +81,7 @@ struct RedBlackLazySegmentTree {
         assert(0 <= l and l <= r and r <= size());
         return prod(root, 0, root->sz, id(), l, r);
     }
-    S operator[](int k) {
+    S get(int k) {
         assert(0 <= k and k < size());
         return prod(k, k+1);
     }
@@ -112,7 +112,7 @@ protected:
     }
 
     node* set_lazy(node* p, const F& lazy) {
-        p->prd = mapping(p->prd, lazy);
+        p->prd = mapping(lazy, p->prd);
         if (p->l) p->lazy = composition(p->lazy, lazy);
         return p;
     }
@@ -166,7 +166,7 @@ protected:
 
     S prod(node *p, int a, int b, F lazy, int l, int r) {
         if (b <= l or r <= a) return e();
-        if (l <= a and b <= r) return mapping(p->prd, lazy);
+        if (l <= a and b <= r) return mapping(lazy, p->prd);
         return op(prod(p->l, a, a + p->l->sz, composition(p->lazy, lazy), l, r),
                   prod(p->r, b - p->r->sz, b, composition(p->lazy, lazy), l, r));
     }
