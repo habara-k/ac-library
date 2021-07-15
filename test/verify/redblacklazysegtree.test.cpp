@@ -1,6 +1,7 @@
 #define PROBLEM "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508"
 
-#include <atcoder/all>
+#include <atcoder/redblacklazysegtree>
+#include <iostream>
 
 using namespace atcoder;
 using namespace std;
