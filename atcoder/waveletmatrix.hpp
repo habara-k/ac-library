@@ -1,6 +1,8 @@
 #ifndef ATCODER_WAVELETMATRIX_HPP
 #define ATCODER_WAVELETMATRIX_HPP 1
 
+#include <cassert>
+#include <tuple>
 #include <vector>
 
 namespace atcoder {
