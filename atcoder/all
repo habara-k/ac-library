@@ -19,3 +19,4 @@
 #include "atcoder/hld"
 #include "atcoder/persistentsegtree"
 #include "atcoder/redblacklazysegtree"
+#include "atcoder/waveletmatrix"
