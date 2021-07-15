@@ -5,7 +5,7 @@
 "test/verify/fps_log.test.cpp": "2021-07-15 17:18:36 +0900",
 "test/verify/fps_pow.test.cpp": "2021-07-15 17:18:36 +0900",
 "test/verify/hld.test.cpp": "2021-07-15 17:18:36 +0900",
-"test/verify/persistentsegtree.test.cpp": "2021-07-15 17:18:36 +0900"
+"test/verify/persistentsegtree.test.cpp": "2021-07-15 17:18:36 +0900",
 "test/verify/rollinghash.test.cpp": "2021-07-15 06:45:27 +0900",
 "test/verify/treehash.test.cpp": "2021-07-15 06:45:27 +0900"
 }
