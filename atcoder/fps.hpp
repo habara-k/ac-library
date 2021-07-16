@@ -130,6 +130,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n log n)
     F &log_inplace(int d = -1) {
+        if (d != -1) this->resize(d);
         int n = int(this->size());
         assert(n > 0 && (*this)[0] == 1);
         if (d == -1) d = n;
@@ -235,6 +236,7 @@ struct FormalPowerSeries : vector<T> {
 
     // O(n log n)
     F &pow_inplace(long long k, int d = -1) {
+        if (d != -1) this->resize(d);
         int n = int(this->size());
         if (d == -1) d = n;
         assert(d >= 0);
