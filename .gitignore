@@ -4,3 +4,7 @@ build
 !tools/*.html
 tools/ac-library.zip
 __pycache__
+
+.cache
+compile_commands.json
+
