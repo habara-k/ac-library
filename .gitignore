@@ -5,6 +5,4 @@ build
 tools/ac-library.zip
 __pycache__
 
-.cache
-compile_commands.json
-
+combined.cpp
