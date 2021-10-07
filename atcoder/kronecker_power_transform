@@ -1,0 +1,1 @@
+#include <atcoder/kronecker_power_transform.hpp>

@@ -20,3 +20,4 @@
 #include "atcoder/persistentsegtree"
 #include "atcoder/redblacklazysegtree"
 #include "atcoder/waveletmatrix"
+#include "atcoder/kronecker_power_transform"
