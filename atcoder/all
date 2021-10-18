@@ -22,3 +22,4 @@
 #include "atcoder/waveletmatrix"
 #include "atcoder/kronecker_power_transform"
 #include "atcoder/segment_map"
+#include "atcoder/math_enhanced"
