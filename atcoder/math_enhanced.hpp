@@ -1,9 +1,47 @@
 #ifndef ATCODER_MATH_ENHANCED_HPP
 #define ATCODER_MATH_ENHANCED_HPP 1
 
+#include<numeric>
+#include<ext/pb_ds/assoc_container.hpp>
+
 namespace atcoder {
 
 using namespace std;
+using namespace __gnu_pbds;
+
+int64_t mod_log(int64_t a, int64_t b, int64_t p) {
+    int64_t g = 1;
+    for (int64_t i = p; i; i /= 2) (g *= a) %= p;
+    g = gcd(g, p);
+
+    int64_t t = 1, c = 0;
+    for (; t % g; c++) {
+        if (t == b) return c;
+        (t *= a) %= p;
+    }
+
+    if (b % g) return -1;
+
+    t /= g;
+    b /= g;
+    p /= g;
+
+    int64_t h = 0, gs = 1;
+
+    for (; h * h < p; h++) (gs *= a) %= p;
+    gp_hash_table<int64_t, int64_t> bs;
+    for (int64_t s = 0, e = b; s < h; bs[e] = ++s) {
+        (e *= a) %= p;
+    }
+
+    for (int64_t s = 0, e = t; s < p;) {
+        (e *= gs) %= p;
+        s += h;
+        if (bs.find(e) != bs.end()) return c + s - bs[e];
+    }
+
+    return -1;
+}
 
 template<typename T>
 T extgcd(T a, T b, T &x, T &y) {
