@@ -27,7 +27,9 @@ struct re_rooting {
         g[v].push_back((edge){u, e});
     }
 
-    // dp[u] := merge({ mapping(dp[e.to], e.data) | e in g[u] })
+    // for all root in V:
+    //   sub[u] := merge({ mapping(dp[e.to], e.data) | e in rooted_tree[root][u] })
+    //   dp[root] := sub[root]
     vector<T> solve() {
         dfs_sub(0, -1);
         dfs_all(0, -1, id());
