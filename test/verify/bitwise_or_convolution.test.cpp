@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/bitwise_xor_convolution"
+#define PROBLEM "https://judge.yosupo.jp/problem/bitwise_and_convolution"
 
 #include <atcoder/modint>
 #include <atcoder/kronecker_power_transform>
@@ -18,7 +18,10 @@ int main() {
     for (int i = 0; i < 1<<n; i++) {
         int x; cin >> x; b[i] = x;
     }
-    xor_convolution(a, b);
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    bitwise_or_convolution(a, b);
+    reverse(a.begin(), a.end());
     for (int i = 0; i < 1<<n; i++) {
         cout << a[i].val() << ' ';
     }
