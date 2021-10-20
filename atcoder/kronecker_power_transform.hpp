@@ -88,10 +88,10 @@ void bitwise_or_convolution(std::vector<T>& a, std::vector<T>& b) {
     // a'[k] = \sum_{i or j = k} a[i]b[j]
     // b' = undefined
     assert(a.size() == b.size());
-    SubsetZetaTransform<T>::apply(a, true);
-    SubsetZetaTransform<T>::apply(b, true);
+    SubsetZetaTransform<T>::apply(a);
+    SubsetZetaTransform<T>::apply(b);
     for (int i = 0; i < int(a.size()); i++) a[i] *= b[i];
-    SubsetMobiusTransform<T>::apply(a, true);
+    SubsetMobiusTransform<T>::apply(a);
 }
 
 }  // namespace atcoder
