@@ -18,9 +18,9 @@ int main() {
     for (int i = 0; i < 1<<n; i++) {
         int x; cin >> x; b[i] = x;
     }
-    auto c = xor_convolution(a, b);
+    xor_convolution(a, b);
     for (int i = 0; i < 1<<n; i++) {
-        cout << c[i].val() << ' ';
+        cout << a[i].val() << ' ';
     }
     cout << '\n';
 }
