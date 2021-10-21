@@ -6,8 +6,6 @@
 
 namespace atcoder {
 
-using namespace std;
-
 template<
         class S,
         S (*op)(S,S),
@@ -35,7 +33,7 @@ struct RedBlackLazySegmentTree {
     int size() { return size(root); }
     int size(node *p) { return p ? p->sz : 0; }
 
-    void build(const vector<S>& v) {
+    void build(const std::vector<S>& v) {
         root = build(v, 0, int(v.size()));
     }
 
@@ -45,7 +43,7 @@ struct RedBlackLazySegmentTree {
         auto c = merge_sub(a, b);
         return as_root(c);
     }
-    pair<node*, node*> split(node *a, int k) {
+    std::pair<node*, node*> split(node *a, int k) {
         assert(0 <= k and k <= size(a));
         if (k == 0) return {nullptr, a};
         if (k == size(a)) return {a, nullptr};
@@ -96,8 +94,8 @@ struct RedBlackLazySegmentTree {
 
 protected:
 
-    vector<node> pool;
-    vector<node*> stock;
+    std::vector<node> pool;
+    std::vector<node*> stock;
     int head = POOL;
 
     template<typename... U>
@@ -126,7 +124,7 @@ protected:
         return p;
     }
 
-    node* build(const vector<S>& v, int l, int r) {
+    node* build(const std::vector<S>& v, int l, int r) {
         if (r - l == 1) return alloc(v[l]);
         return merge(build(v, l, (l+r)/2), build(v, (l+r)/2, r));
     }
