@@ -9,12 +9,10 @@ namespace atcoder {
 
 // Reference: https://ei1333.github.io/library/structure/wavelet/succinct-indexable-dictionary.cpp
 
-using namespace std;
-
 struct SuccinctIndexableDictionary {
     int length;
     int blocks;
-    vector< unsigned > bit, sum;
+    std::vector< unsigned > bit, sum;
 
     SuccinctIndexableDictionary() = default;
 
@@ -58,8 +56,8 @@ struct WaveletMatrix {
 
     WaveletMatrix() = default;
 
-    explicit WaveletMatrix(vector< T > v) : length(int(v.size())) {
-        vector< T > l(length), r(length);
+    explicit WaveletMatrix(std::vector< T > v) : length(int(v.size())) {
+        std::vector< T > l(length), r(length);
         for(int level = MAXLOG - 1; level >= 0; level--) {
             matrix[level] = SuccinctIndexableDictionary(length + 1);
             int left = 0, right = 0;
@@ -80,7 +78,7 @@ struct WaveletMatrix {
         }
     }
 
-    pair< int, int > succ(bool f, int l, int r, int level) {
+    std::pair< int, int > succ(bool f, int l, int r, int level) {
         return {matrix[level].rank(f, l) + mid[level] * f, matrix[level].rank(f, r) + mid[level] * f};
     }
 
@@ -103,7 +101,7 @@ struct WaveletMatrix {
     int rank(const T &x, int r) {
         int l = 0;
         for(int level = MAXLOG - 1; level >= 0; level--) {
-            tie(l, r) = succ((x >> level) & 1, l, r, level);
+            std::tie(l, r) = succ((x >> level) & 1, l, r, level);
         }
         return r - l;
     }
@@ -119,7 +117,7 @@ struct WaveletMatrix {
                 ret |= T(1) << level;
                 k -= cnt;
             }
-            tie(l, r) = succ(f, l, r, level);
+            std::tie(l, r) = succ(f, l, r, level);
         }
         return ret;
     }
@@ -135,7 +133,7 @@ struct WaveletMatrix {
         for(int level = MAXLOG - 1; level >= 0; level--) {
             bool f = ((upper >> level) & 1);
             if(f) ret += matrix[level].rank(false, r) - matrix[level].rank(false, l);
-            tie(l, r) = succ(f, l, r, level);
+            std::tie(l, r) = succ(f, l, r, level);
         }
         return ret;
     }
