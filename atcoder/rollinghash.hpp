@@ -5,15 +5,14 @@
 
 namespace atcoder {
 
-using namespace std;
-
 struct RollingHash {
+    using u128 = __uint128_t;
     using u64 = uint64_t;
 
     template<typename S>
     explicit RollingHash(const S &s, int seed=0) {
-        mt19937 random(seed);
-        uniform_int_distribution<u64> dist(2, MOD-2);
+        std::mt19937 random(seed);
+        std::uniform_int_distribution<u64> dist(2, MOD-2);
         u64 base = dist(random);
         int n = int(s.size());
         hash.assign(n+1, 0);
@@ -31,19 +30,14 @@ struct RollingHash {
     }
 
 private:
-    vector<u64> hash, pow;
+    std::vector<u64> hash, pow;
 
     static const u64 MOD = (1ull << 61) - 1;
-    static const u64 MASK31 = (1ull << 31) - 1;
 
-    static u64 mul(u64 a, u64 b) {
-        u64 au = a >> 31, ad = a & MASK31;
-        u64 bu = b >> 31, bd = b & MASK31;
-        u64 mid = ad * bu + au * bd;
-        u64 midu = mid >> 31, midd = mid & MASK31;
-        u64 t = 2 * (au * bu + midu) + (midd << 31) + ad * bd;
+    static u64 mul(u128 a, u128 b) {
+        u128 t = a * b;
         t = (t >> 61) + (t & MOD);
-        return t >= MOD ? t - MOD : t;
+        return u64(t >= MOD ? t - MOD : t);
     }
 };
 

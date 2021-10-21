@@ -8,6 +8,7 @@
 namespace atcoder {
 
 struct TreeHash {
+    using u128 = __uint128_t;
     using u64 = uint64_t;
 
     explicit TreeHash(const std::vector<std::vector<int>>& g_, int seed=0) : g(g_) {
@@ -29,16 +30,11 @@ private:
     std::vector<u64> base;
     std::vector<std::vector<int>> g;
     static const u64 MOD = (1ull << 61) - 1;
-    static const u64 MASK31 = (1ull << 31) - 1;
 
-    static u64 mul(u64 a, u64 b) {
-        u64 au = a >> 31, ad = a & MASK31;
-        u64 bu = b >> 31, bd = b & MASK31;
-        u64 mid = ad * bu + au * bd;
-        u64 midu = mid >> 31, midd = mid & MASK31;
-        u64 t = 2 * (au * bu + midu) + (midd << 31) + ad * bd;
+    static u64 mul(u128 a, u128 b) {
+        u128 t = a * b;
         t = (t >> 61) + (t & MOD);
-        return t >= MOD ? t - MOD : t;
+        return u64(t >= MOD ? t - MOD : t);
     }
 
     u64 dfs(int u, int p, int d) {
