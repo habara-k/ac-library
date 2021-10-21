@@ -5,14 +5,12 @@
 
 namespace atcoder {
 
-using namespace std;
-
 // Reference: https://ei1333.github.io/luzhiled/snippets/tree/heavy-light-decomposition.html
 
 template< typename G >
 struct HeavyLightDecomposition {
     G &g;
-    vector< int > sz, in, out, head, rev, par;
+    std::vector< int > sz, in, out, head, rev, par;
 
     explicit HeavyLightDecomposition(G &g_) :
             g(g_), sz(g.size()), in(g.size()), out(g.size()), head(g.size()), rev(g.size()), par(g.size()) {
@@ -30,7 +28,7 @@ struct HeavyLightDecomposition {
 
     int lca(int u, int v) {
         for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
+            if(in[u] > in[v]) std::swap(u, v);
             if(head[u] == head[v]) return u;
         }
     }
@@ -40,7 +38,7 @@ struct HeavyLightDecomposition {
         // Require: f(a, b) == f(b, a)
         T s = id;
         for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
+            if(in[u] > in[v]) std::swap(u, v);
             if(head[u] == head[v]) break;
             s = f(s, q(in[head[v]], in[v] + 1));
         }
@@ -50,7 +48,7 @@ struct HeavyLightDecomposition {
     template< typename Q >
     void apply(int u, int v, const Q &q, bool edge = false) {
         for(;; v = par[head[v]]) {
-            if(in[u] > in[v]) swap(u, v);
+            if(in[u] > in[v]) std::swap(u, v);
             if(head[u] == head[v]) break;
             q(in[head[v]], in[v] + 1);
         }
@@ -61,12 +59,12 @@ private:
     void dfs_sz(int idx, int p) {
         par[idx] = p;
         sz[idx] = 1;
-        if(g[idx].size() && g[idx][0] == p) swap(g[idx][0], g[idx].back());
+        if(g[idx].size() && g[idx][0] == p) std::swap(g[idx][0], g[idx].back());
         for(auto &to : g[idx]) {
             if(to == p) continue;
             dfs_sz(to, idx);
             sz[idx] += sz[to];
-            if(sz[g[idx][0]] < sz[to]) swap(g[idx][0], to);
+            if(sz[g[idx][0]] < sz[to]) std::swap(g[idx][0], to);
         }
     }
 
