@@ -23,7 +23,7 @@ class Test(unittest.TestCase):
             proc = run(['python', str(expander_path), str(
                 source.resolve())] + expander_args, cwd=str(tmp), env=env)
             self.assertEqual(proc.returncode, 0)
-            proc = run(['g++', 'combined.cpp', '-std=c++14'], cwd=str(tmp))
+            proc = run(['g++', 'combined.cpp', '-std=c++17'], cwd=str(tmp))
             self.assertEqual(proc.returncode, 0)
 
     def test_dsu(self):
