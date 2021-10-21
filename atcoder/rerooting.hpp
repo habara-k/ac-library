@@ -6,8 +6,6 @@
 
 namespace atcoder {
 
-using namespace std;
-
 template<
         class T,
         T (*merge)(T,T),
@@ -16,8 +14,8 @@ template<
         T (*mapping)(T,EdgeData)>
 struct re_rooting {
 
-    explicit re_rooting(int n) : re_rooting(vector<T>(n, id())) {}
-    explicit re_rooting(const vector<T>& init) : g(init.size()), dp(init) {}
+    explicit re_rooting(int n) : re_rooting(std::vector<T>(n, id())) {}
+    explicit re_rooting(const std::vector<T>& init) : g(init.size()), dp(init) {}
 
     void add_edge(int u, int v, EdgeData d) {
         add_edge(u, v, d, d);
@@ -30,7 +28,7 @@ struct re_rooting {
     // for all root in V:
     //   sub[u] := merge({ mapping(dp[e.to], e.data) | e in rooted_tree[root][u] })
     //   dp[root] := sub[root]
-    vector<T> solve() {
+    std::vector<T> solve() {
         dfs_sub(0, -1);
         dfs_all(0, -1, id());
         return dp;
@@ -42,8 +40,8 @@ private:
         EdgeData data;
         T lsum = id(), sub = id();
     };
-    vector<vector<edge>> g;
-    vector<T> dp;
+    std::vector<std::vector<edge>> g;
+    std::vector<T> dp;
 
     T dfs_sub(int u, int par) {
         for (edge& e : g[u]) {

@@ -7,20 +7,18 @@
 
 namespace atcoder {
 
-using namespace std;
-
 struct TreeHash {
     using u64 = uint64_t;
 
-    explicit TreeHash(const vector<vector<int>>& g_, int seed=0) : g(g_) {
+    explicit TreeHash(const std::vector<std::vector<int>>& g_, int seed=0) : g(g_) {
         int n = int(g.size());
-        mt19937 random(seed);
-        uniform_int_distribution<u64> dist(2, MOD-2);
+        std::mt19937 random(seed);
+        std::uniform_int_distribution<u64> dist(2, MOD-2);
         for (int i = 0; i < n; ++i) base.emplace_back(dist(random));
     }
 
     u64 get() {
-        vector<u64> hash;
+        std::vector<u64> hash;
         for (int root : centroid(g)) {
             hash.emplace_back(dfs(root, -1, 0));
         }
@@ -28,8 +26,8 @@ struct TreeHash {
     }
 
 private:
-    vector<u64> base;
-    vector<vector<int>> g;
+    std::vector<u64> base;
+    std::vector<std::vector<int>> g;
     static const u64 MOD = (1ull << 61) - 1;
     static const u64 MASK31 = (1ull << 31) - 1;
 
