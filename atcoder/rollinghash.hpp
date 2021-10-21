@@ -10,8 +10,8 @@ struct RollingHash {
 
     template<typename S>
     explicit RollingHash(const S &s, int seed=0) {
-        mt19937 random(seed);
-        uniform_int_distribution<u64> dist(2, MOD-2);
+        std::mt19937 random(seed);
+        std::uniform_int_distribution<u64> dist(2, MOD-2);
         u64 base = dist(random);
         int n = int(s.size());
         hash.assign(n+1, 0);
