@@ -6,13 +6,11 @@
 
 namespace atcoder {
 
-using namespace std;
-
 // https://opt-cp.com/fps-fast-algorithms
 template<class T>
-struct FormalPowerSeries : vector<T> {
-    using vector<T>::vector;
-    using vector<T>::operator=;
+struct FormalPowerSeries : std::vector<T> {
+    using std::vector<T>::vector;
+    using std::vector<T>::operator=;
     using F = FormalPowerSeries;
 
     F operator-() const {
@@ -31,12 +29,12 @@ struct FormalPowerSeries : vector<T> {
     }
     F &operator+=(const F &g) {
         int n = int(this->size()), m = int(g.size());
-        for (int i = 0; i < min(n, m); i++) (*this)[i] += g[i];
+        for (int i = 0; i < std::min(n, m); i++) (*this)[i] += g[i];
         return *this;
     }
     F &operator-=(const F &g) {
         int n = int(this->size()), m = int(g.size());
-        for (int i = 0; i < min(n, m); i++) (*this)[i] -= g[i];
+        for (int i = 0; i < std::min(n, m); i++) (*this)[i] -= g[i];
         return *this;
     }
     F &operator<<=(const int d) {
@@ -48,7 +46,7 @@ struct FormalPowerSeries : vector<T> {
     }
     F &operator>>=(const int d) {
         int n = int(this->size());
-        this->erase(this->begin(), this->begin() + min(n, d));
+        this->erase(this->begin(), this->begin() + std::min(n, d));
         this->resize(n);
         return *this;
     }
@@ -61,7 +59,7 @@ struct FormalPowerSeries : vector<T> {
         assert(d >= 0);
         F res{(*this)[0].inv()};
         for (int m = 1; m < d; m *= 2) {
-            F f(this->begin(), this->begin() + min(n, 2*m));
+            F f(this->begin(), this->begin() + std::min(n, 2*m));
             F g(res);
             f.resize(2*m), internal::butterfly(f);
             g.resize(2*m), internal::butterfly(g);
@@ -108,7 +106,7 @@ struct FormalPowerSeries : vector<T> {
         if (n == 1) return *this = F{0};
         this->insert(this->begin(), 0);
         this->pop_back();
-        vector<T> inv(n);
+        std::vector<T> inv(n);
         inv[1] = 1;
         int p = T::mod();
         for (int i = 2; i < n; ++i) inv[i] = - inv[p%i] * (p/i);
@@ -215,7 +213,7 @@ struct FormalPowerSeries : vector<T> {
             }
 
             // Step 2.f'
-            F v(this->begin() + m, this->begin() + min<int>(d, 2*m)); v.resize(m);
+            F v(this->begin() + m, this->begin() + std::min<int>(d, 2*m)); v.resize(m);
             t.insert(t.begin(), m-1, 0); t.push_back(0);
             t.integ_inplace();
             for (int i = 0; i < m; i++) v[i] -= t[m+i];
@@ -228,7 +226,7 @@ struct FormalPowerSeries : vector<T> {
             v /= 2*m;
 
             // Step 2.h'
-            for (int i = 0; i < min(d - m, m); i++) (*this)[m+i] = v[i];
+            for (int i = 0; i < std::min(d - m, m); i++) (*this)[m+i] = v[i];
         }
         return *this;
     }

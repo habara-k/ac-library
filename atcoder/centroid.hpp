@@ -5,11 +5,9 @@
 
 namespace atcoder {
 
-using namespace std;
-
-vector<int> centroid(const vector<vector<int>>& g) {
+std::vector<int> centroid(const std::vector<std::vector<int>>& g) {
     const int n = int(g.size());
-    vector<int> sz(n,1), ret;
+    std::vector<int> sz(n,1), ret;
     auto dfs = [&](auto self, int u, int p) -> int {
         bool isCent = true;
         for (int v : g[u]) {

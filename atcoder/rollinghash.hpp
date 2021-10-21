@@ -5,8 +5,6 @@
 
 namespace atcoder {
 
-using namespace std;
-
 struct RollingHash {
     using u64 = uint64_t;
 

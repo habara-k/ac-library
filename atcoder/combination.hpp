@@ -5,13 +5,11 @@
 
 namespace atcoder {
 
-using namespace std;
-
 // Reference: https://ei1333.github.io/luzhiled/snippets/math/combination.html
 
 template<typename T>
 struct Combination {
-    vector<T> _fact, _rfact, _inv;
+    std::vector<T> _fact, _rfact, _inv;
 
     Combination(int sz) : _fact(sz + 1), _rfact(sz + 1), _inv(sz + 1) {
         _fact[0] = _rfact[sz] = _inv[0] = 1;

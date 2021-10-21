@@ -9,12 +9,10 @@ namespace atcoder {
 
 // Reference: https://ei1333.github.io/library/structure/wavelet/succinct-indexable-dictionary.cpp
 
-using namespace std;
-
 struct SuccinctIndexableDictionary {
     int length;
     int blocks;
-    vector< unsigned > bit, sum;
+    std::vector< unsigned > bit, sum;
 
     SuccinctIndexableDictionary() = default;
 
@@ -58,8 +56,8 @@ struct WaveletMatrix {
 
     WaveletMatrix() = default;
 
-    explicit WaveletMatrix(vector< T > v) : length(int(v.size())) {
-        vector< T > l(length), r(length);
+    explicit WaveletMatrix(std::vector< T > v) : length(int(v.size())) {
+        std::vector< T > l(length), r(length);
         for(int level = MAXLOG - 1; level >= 0; level--) {
             matrix[level] = SuccinctIndexableDictionary(length + 1);
             int left = 0, right = 0;
