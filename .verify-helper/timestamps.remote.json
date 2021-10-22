@@ -10,5 +10,13 @@
 "test/fps_log.test.cpp": "2021-10-22 20:41:06 +0900",
 "test/fps_pow.test.cpp": "2021-10-22 20:41:06 +0900",
 "test/hld.test.cpp": "2021-10-22 20:41:06 +0900",
-"test/modlog.test.cpp": "2021-10-22 20:41:06 +0900"
+"test/modlog.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/persistentsegtree.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/redblacklazysegtree.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/rerooting.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/rollinghash.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/segment_map.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/treehash.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/waveletmatrix.test.cpp": "2021-10-22 20:41:06 +0900",
+"test/xor_convolution.test.cpp": "2021-10-22 20:41:06 +0900"
 }
