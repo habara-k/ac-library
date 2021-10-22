@@ -99,11 +99,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: atcoder/waveletmatrix.hpp
       title: atcoder/waveletmatrix.hpp
-  - name: .
-    pages:
-    - icon: ':warning:'
-      path: expander.py
-      title: expander.py
   verificationCategories:
   - name: test
     pages:
