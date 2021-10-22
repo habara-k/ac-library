@@ -21,7 +21,7 @@ endif()
 enable_testing()
 
 include_directories(.)
-include_directories(../../)
+include_directories(../)
 
 add_executable(FormalPowerSeriesExpTest fps_exp.test.cpp)
 add_executable(FormalPowerSeriesInvTest fps_inv.test.cpp)
