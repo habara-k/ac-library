@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-# verification-helper: IGNORE
-
 import re
 import sys
 import argparse
