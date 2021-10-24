@@ -115,6 +115,9 @@ data:
       path: test/combination.test.cpp
       title: test/combination.test.cpp
     - icon: ':heavy_check_mark:'
+      path: test/dynamic_sequence_range_affine_range_sum.test.cpp
+      title: test/dynamic_sequence_range_affine_range_sum.test.cpp
+    - icon: ':heavy_check_mark:'
       path: test/extgcd.test.cpp
       title: test/extgcd.test.cpp
     - icon: ':heavy_check_mark:'

@@ -25,6 +25,9 @@ data:
     path: test/combination.test.cpp
     title: test/combination.test.cpp
   - icon: ':heavy_check_mark:'
+    path: test/dynamic_sequence_range_affine_range_sum.test.cpp
+    title: test/dynamic_sequence_range_affine_range_sum.test.cpp
+  - icon: ':heavy_check_mark:'
     path: test/fps_bostan_mori.test.cpp
     title: test/fps_bostan_mori.test.cpp
   - icon: ':heavy_check_mark:'
@@ -150,6 +153,7 @@ data:
   - test/fps_inv.test.cpp
   - test/xor_convolution.test.cpp
   - test/bitwise_and_convolution.test.cpp
+  - test/dynamic_sequence_range_affine_range_sum.test.cpp
   - test/fps_pow.test.cpp
   - test/fps_exp.test.cpp
   - test/combination.test.cpp
