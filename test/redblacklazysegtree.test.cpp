@@ -24,7 +24,7 @@ int main() {
     int n, q; cin >> n >> q;
     vector<int> a(n);
     for (int i = 0; i < n; i++) cin >> a[i];
-    RedBlackLazySegmentTree<int,op,e,int,mapping,composition,id,500000> tree;
+    rb_lazy_segtree<int,op,e,int,mapping,composition,id> tree(n);
     tree.build(a);
     while (q--) {
         int t; cin >> t;
