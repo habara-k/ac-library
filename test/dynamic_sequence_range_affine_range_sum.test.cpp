@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/dynamic_sequence_range_affine_range_sum"
 
-#include <atcoder/redblacklazysegtree>
+#include <atcoder/rbtree>
 #include <atcoder/modint>
 #include <iostream>
 #include <limits>
