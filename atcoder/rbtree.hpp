@@ -1,5 +1,5 @@
-#ifndef ATCODER_REDBLACKLAZYSEGTREE_HPP
-#define ATCODER_REDBLACKLAZYSEGTREE_HPP 1
+#ifndef ATCODER_RBTREE_HPP
+#define ATCODER_RBTREE_HPP 1
 
 #include <cassert>
 #include <vector>
@@ -321,4 +321,4 @@ private:
 
 }  // namespace atcoder
 
-#endif  // ATCODER_REDBLACKLAZYSEGTREE_HPP
+#endif  // ATCODER_RBTREE_HPP
