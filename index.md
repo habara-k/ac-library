@@ -70,8 +70,8 @@ data:
       path: atcoder/persistentsegtree.hpp
       title: atcoder/persistentsegtree.hpp
     - icon: ':heavy_check_mark:'
-      path: atcoder/redblacklazysegtree.hpp
-      title: atcoder/redblacklazysegtree.hpp
+      path: atcoder/rbtree.hpp
+      title: atcoder/rbtree.hpp
     - icon: ':heavy_check_mark:'
       path: atcoder/rerooting.hpp
       title: atcoder/rerooting.hpp

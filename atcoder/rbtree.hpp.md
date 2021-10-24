@@ -19,8 +19,8 @@ data:
     - https://ei1333.github.io/library/structure/bbst/lazy-red-black-tree.cpp
     - https://github.com/atcoder/ac-library/blob/master/atcoder/lazysegtree.hpp
     - https://suisen-cp.github.io/cp-library-cpp/library/datastructure/lazy_eval_dynamic_sequence.hpp
-  bundledCode: "#line 1 \"atcoder/redblacklazysegtree.hpp\"\n\n\n\n#include <cassert>\n\
-    #include <vector>\n#include <iostream>\n\nnamespace atcoder {\n\n// https://ei1333.github.io/library/other/vector-pool.cpp\n\
+  bundledCode: "#line 1 \"atcoder/rbtree.hpp\"\n\n\n\n#include <cassert>\n#include\
+    \ <vector>\n#include <iostream>\n\nnamespace atcoder {\n\n// https://ei1333.github.io/library/other/vector-pool.cpp\n\
     template<class T>\nstruct VectorPool {\n    std::vector<T> pool;\n    std::vector<T*>\
     \ stock;\n    int size = 0;\n\n    VectorPool() = default;\n\n    explicit VectorPool(int\
     \ sz) : pool(sz), stock(sz) { clear(); }\n\n    inline T *alloc() { return stock[size++];\
@@ -147,11 +147,10 @@ data:
     \    }\n    static ptr reversed(ptr p) {\n        assert(p != nullptr);\n    \
     \    std::swap(p->l, p->r);\n        if (p->l) p->rev ^= 1;\n        return p;\n\
     \    }\n};\n\n}  // namespace atcoder\n\n\n"
-  code: "#ifndef ATCODER_REDBLACKLAZYSEGTREE_HPP\n#define ATCODER_REDBLACKLAZYSEGTREE_HPP\
-    \ 1\n\n#include <cassert>\n#include <vector>\n#include <iostream>\n\nnamespace\
-    \ atcoder {\n\n// https://ei1333.github.io/library/other/vector-pool.cpp\ntemplate<class\
-    \ T>\nstruct VectorPool {\n    std::vector<T> pool;\n    std::vector<T*> stock;\n\
-    \    int size = 0;\n\n    VectorPool() = default;\n\n    explicit VectorPool(int\
+  code: "#ifndef ATCODER_RBTREE_HPP\n#define ATCODER_RBTREE_HPP 1\n\n#include <cassert>\n\
+    #include <vector>\n#include <iostream>\n\nnamespace atcoder {\n\n// https://ei1333.github.io/library/other/vector-pool.cpp\n\
+    template<class T>\nstruct VectorPool {\n    std::vector<T> pool;\n    std::vector<T*>\
+    \ stock;\n    int size = 0;\n\n    VectorPool() = default;\n\n    explicit VectorPool(int\
     \ sz) : pool(sz), stock(sz) { clear(); }\n\n    inline T *alloc() { return stock[size++];\
     \ }\n\n    inline void free(T *t) { stock[--size] = t; }\n\n    void clear() {\n\
     \        size = 0;\n        for (int i = 0; i < (int)pool.size(); i++) stock[i]\
@@ -275,20 +274,20 @@ data:
     \        if (p->l) p->lazy = composition(p->lazy, lazy);\n        return p;\n\
     \    }\n    static ptr reversed(ptr p) {\n        assert(p != nullptr);\n    \
     \    std::swap(p->l, p->r);\n        if (p->l) p->rev ^= 1;\n        return p;\n\
-    \    }\n};\n\n}  // namespace atcoder\n\n#endif  // ATCODER_REDBLACKLAZYSEGTREE_HPP\n"
+    \    }\n};\n\n}  // namespace atcoder\n\n#endif  // ATCODER_RBTREE_HPP\n"
   dependsOn: []
   isVerificationFile: false
-  path: atcoder/redblacklazysegtree.hpp
+  path: atcoder/rbtree.hpp
   requiredBy: []
-  timestamp: '2021-10-25 07:43:47+09:00'
+  timestamp: '2021-10-25 07:59:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/dynamic_sequence_range_affine_range_sum.test.cpp
   - test/redblacklazysegtree.test.cpp
-documentation_of: atcoder/redblacklazysegtree.hpp
+documentation_of: atcoder/rbtree.hpp
 layout: document
 redirect_from:
-- /library/atcoder/redblacklazysegtree.hpp
-- /library/atcoder/redblacklazysegtree.hpp.html
-title: atcoder/redblacklazysegtree.hpp
+- /library/atcoder/rbtree.hpp
+- /library/atcoder/rbtree.hpp.html
+title: atcoder/rbtree.hpp
 ---
