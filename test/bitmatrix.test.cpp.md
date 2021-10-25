@@ -26,7 +26,7 @@ data:
     \ j2] = 1;\n                        }\n                    }\n               \
     \ }\n            }\n        }\n        vector<bool> b(n*m), x;\n        for (int\
     \ i = 0; i < n*m; i++) {\n            int f; cin >> f; b[i] = f;\n        }\n\n\
-    \        int rank = linear_equation(A, b, x);\n        cout << (rank != -1) <<\
+    \        int rank = LinearEquation(A, b, x);\n        cout << (rank != -1) <<\
     \ endl;\n    }\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1308\"\
     \n\n#include <atcoder/bitmatrix>\n#include <vector>\n#include <iostream>\n\nusing\
@@ -40,14 +40,14 @@ data:
     \ j2] = 1;\n                        }\n                    }\n               \
     \ }\n            }\n        }\n        vector<bool> b(n*m), x;\n        for (int\
     \ i = 0; i < n*m; i++) {\n            int f; cin >> f; b[i] = f;\n        }\n\n\
-    \        int rank = linear_equation(A, b, x);\n        cout << (rank != -1) <<\
+    \        int rank = LinearEquation(A, b, x);\n        cout << (rank != -1) <<\
     \ endl;\n    }\n}\n"
   dependsOn:
   - atcoder/bitmatrix.hpp
   isVerificationFile: true
   path: test/bitmatrix.test.cpp
   requiredBy: []
-  timestamp: '2021-10-25 10:43:37+09:00'
+  timestamp: '2021-10-25 12:05:31+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/bitmatrix.test.cpp
