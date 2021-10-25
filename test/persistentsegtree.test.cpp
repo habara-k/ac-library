@@ -44,21 +44,22 @@ int main()
     auto hld = HeavyLightDecomposition(G);
 
     // persistent segtree
-    PersistentSegmentTree<int, op, e> segt(comp_size);
+    PersistentSegmentTree<int, op, e> seg;
 
-    map<int, PersistentSegmentTree<int, op, e>::Node*> root;
+    using ptr = PersistentSegmentTree<int, op, e>::Node*;
+    map<int, ptr> root;
     vector<int> par(N);
 
     auto dfs = [&](auto self, int u, int p) -> void {
         par[u] = p;
-        root[u] = segt.set(root[p],
-                           comp[x[u]], segt.get(root[p], comp[x[u]]) + 1);
+        root[u] = seg.set(root[p],
+                          comp[x[u]], seg.get(root[p], comp[x[u]]) + 1);
         for (int v : G[u]) {
             if (v != p) self(self, v, u);
         }
     };
 
-    root[-1] = segt.build();
+    root[-1] = seg.build(comp_size);
     dfs(dfs, 0, -1);
 
     for (int i = 0; i < Q; ++i)
@@ -70,10 +71,10 @@ int main()
         int u = hld.lca(v, w);
 
         auto check = [&](int m) {
-            int nv = segt.prod(root[v], 0, m+1),
-                    nw = segt.prod(root[w], 0, m+1),
-                    nu = segt.prod(root[u], 0, m+1),
-                    np = segt.prod(root[par[u]], 0, m+1);
+            int nv = seg.prod(root[v], 0, m+1),
+                    nw = seg.prod(root[w], 0, m+1),
+                    nu = seg.prod(root[u], 0, m+1),
+                    np = seg.prod(root[par[u]], 0, m+1);
 
             return nv + nw - nu - np >= l;
         };
