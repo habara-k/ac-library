@@ -6,7 +6,7 @@ data:
     title: atcoder/convolution.hpp
   - icon: ':heavy_check_mark:'
     path: atcoder/fps.hpp
-    title: atcoder/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
   - icon: ':heavy_check_mark:'
     path: atcoder/internal_bit.hpp
     title: atcoder/internal_bit.hpp
@@ -51,7 +51,7 @@ data:
   isVerificationFile: true
   path: test/fps_inv.test.cpp
   requiredBy: []
-  timestamp: '2021-10-22 20:41:06+09:00'
+  timestamp: '2021-10-25 13:43:12+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/fps_inv.test.cpp

@@ -13,7 +13,7 @@ data:
     title: atcoder/convolution.hpp
   - icon: ':heavy_check_mark:'
     path: atcoder/fps.hpp
-    title: atcoder/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: test/bitwise_and_convolution.test.cpp

@@ -97,7 +97,7 @@ data:
     \        this->integ_inplace();\n        return *this;\n    }\n    F log(const\
     \ int d = -1) const { return F(*this).log_inplace(d); }\n\n    // O(n log n)\n\
     \    // https://arxiv.org/abs/1301.5804 (Figure 1, right)\n    F &exp_inplace(int\
-    \ d = -1) {\n        int n = int(this->size());\n        assert(n > 0 && (*this)[0]\
+    \ d = -1) {\n        int n = int(this->size());\n        assert(n >= 0 && (*this)[0]\
     \ == 0);\n        if (d == -1) d = n;\n        assert(d >= 0);\n        F g{1},\
     \ g_fft;\n        this->resize(d);\n        (*this)[0] = 1;\n        F h_drv(this->deriv());\n\
     \        for (int m = 1; m < d; m *= 2) {\n            // prepare\n          \
@@ -155,12 +155,12 @@ data:
     \ int d) const { return F(*this) <<= d; }\n    F operator>>(const int d) const\
     \ { return F(*this) >>= d; }\n};\n\nusing fps = FormalPowerSeries<modint998244353>;\n\
     \ntemplate<typename T>\nT bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T>\
-    \ q, long long n) {\n    while (n > 0) {\n        auto q_ = q;\n        for (int\
+    \ q, long long k) {\n    while (k > 0) {\n        auto q_ = q;\n        for (int\
     \ i = 1; i < int(q.size()); i += 2) q_[i] *= -1;\n\n        q = convolution(move(q),\
     \ q_);\n        int i;\n        for (i = 0; 2*i < (int)(q.size()); i++) q[i] =\
     \ q[2*i];\n        q.resize(i);\n\n        p = convolution(move(p), move(q_));\n\
-    \        for (i = 0; 2*i + (n&1) < (int)(p.size()); i++) p[i] = p[2*i + (n&1)];\n\
-    \        p.resize(i);\n        n >>= 1;\n    }\n    return p[0] / q[0];\n}\n\n\
+    \        for (i = 0; 2*i + (k&1) < (int)(p.size()); i++) p[i] = p[2*i + (k&1)];\n\
+    \        p.resize(i);\n        k >>= 1;\n    }\n    return p[0] / q[0];\n}\n\n\
     }  // namespace atcoder\n\n\n"
   code: "#ifndef ATCODER_FPS_HPP\n#define ATCODER_FPS_HPP 1\n\n#include <atcoder/convolution>\n\
     #include <atcoder/modint>\n\nnamespace atcoder {\n\n// https://opt-cp.com/fps-fast-algorithms\n\
@@ -219,7 +219,7 @@ data:
     \        this->integ_inplace();\n        return *this;\n    }\n    F log(const\
     \ int d = -1) const { return F(*this).log_inplace(d); }\n\n    // O(n log n)\n\
     \    // https://arxiv.org/abs/1301.5804 (Figure 1, right)\n    F &exp_inplace(int\
-    \ d = -1) {\n        int n = int(this->size());\n        assert(n > 0 && (*this)[0]\
+    \ d = -1) {\n        int n = int(this->size());\n        assert(n >= 0 && (*this)[0]\
     \ == 0);\n        if (d == -1) d = n;\n        assert(d >= 0);\n        F g{1},\
     \ g_fft;\n        this->resize(d);\n        (*this)[0] = 1;\n        F h_drv(this->deriv());\n\
     \        for (int m = 1; m < d; m *= 2) {\n            // prepare\n          \
@@ -277,12 +277,12 @@ data:
     \ int d) const { return F(*this) <<= d; }\n    F operator>>(const int d) const\
     \ { return F(*this) >>= d; }\n};\n\nusing fps = FormalPowerSeries<modint998244353>;\n\
     \ntemplate<typename T>\nT bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T>\
-    \ q, long long n) {\n    while (n > 0) {\n        auto q_ = q;\n        for (int\
+    \ q, long long k) {\n    while (k > 0) {\n        auto q_ = q;\n        for (int\
     \ i = 1; i < int(q.size()); i += 2) q_[i] *= -1;\n\n        q = convolution(move(q),\
     \ q_);\n        int i;\n        for (i = 0; 2*i < (int)(q.size()); i++) q[i] =\
     \ q[2*i];\n        q.resize(i);\n\n        p = convolution(move(p), move(q_));\n\
-    \        for (i = 0; 2*i + (n&1) < (int)(p.size()); i++) p[i] = p[2*i + (n&1)];\n\
-    \        p.resize(i);\n        n >>= 1;\n    }\n    return p[0] / q[0];\n}\n\n\
+    \        for (i = 0; 2*i + (k&1) < (int)(p.size()); i++) p[i] = p[2*i + (k&1)];\n\
+    \        p.resize(i);\n        k >>= 1;\n    }\n    return p[0] / q[0];\n}\n\n\
     }  // namespace atcoder\n\n#endif  // ATCODER_FPS_HPP\n"
   dependsOn:
   - atcoder/convolution.hpp
@@ -293,7 +293,7 @@ data:
   isVerificationFile: false
   path: atcoder/fps.hpp
   requiredBy: []
-  timestamp: '2021-10-21 18:06:39+09:00'
+  timestamp: '2021-10-25 13:43:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/fps_bostan_mori.test.cpp
@@ -303,8 +303,45 @@ data:
   - test/fps_log.test.cpp
 documentation_of: atcoder/fps.hpp
 layout: document
-redirect_from:
-- /library/atcoder/fps.hpp
-- /library/atcoder/fps.hpp.html
-title: atcoder/fps.hpp
+title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
 ---
+
+## 概要
+
+NTTの高速な実装. 
+
+以下の演算に含まれる引数 `d` は, 
+演算の結果を $d-1$ 次まで求めることを意味する.
+`d` を渡さなかった場合, 演算の結果は $f(x)$ の精度に丸められる.
+
+- `FPS::inv(d)`: $1/f(x)$
+- `FPS::log(d)`: $\log(f(x))$
+- `FPS::exp(d)`: $\exp(f(x))$
+- `FPS::pow(k, d)`: $(f(x))^k$
+- `FPS::multiply(g, d)`: $f(x) * g(x)$
+- `bostan_mori(p, q, k)`: $p(x) / q(x)$ の $x^k$ の係数を求める.
+
+
+## 制約
+
+- 型テンプレート `T` には NTT-friendly な `modint` を渡す.
+- `FPS::inv`: 定数項が $0$ でない.
+- `FPS::log`: 定数項が $1$ である.
+- `FPS::exp`: 定数項が $0$ である.
+- `bostan_mori(p, q, k)`: $q(x)$ の定数項が $0$ でない.
+
+## 計算量
+
+$f(x)$ の次数を $n$ とした場合,
+
+- `FPS::inv()`: $O(n \log n)$
+- `FPS::log()`: $O(n \log n)$
+- `FPS::exp()`: $O(n \log n)$
+- `FPS::pow(k)`: $O(n \log n)$
+- `FPS::multiply(g)`: $O(n \log n)$
+
+$p(x), q(x)$ の次数の大きい方を $n$ とした場合,
+- `bostan_mori(p, q, k)`: $O(n \log n \log k)$
+
+
+

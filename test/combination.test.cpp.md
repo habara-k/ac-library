@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: atcoder/combination.hpp
-    title: atcoder/combination.hpp
+    title: "\u7D44\u307F\u5408\u308F\u305B"
   - icon: ':heavy_check_mark:'
     path: atcoder/internal_math.hpp
     title: atcoder/internal_math.hpp

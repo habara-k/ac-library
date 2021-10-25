@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: atcoder/centroid.hpp
-    title: atcoder/centroid.hpp
+    title: "\u6728\u306E\u91CD\u5FC3"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -53,7 +53,7 @@ data:
   isVerificationFile: false
   path: atcoder/treehash.hpp
   requiredBy: []
-  timestamp: '2021-10-21 20:15:28+09:00'
+  timestamp: '2021-10-25 13:43:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/treehash.test.cpp

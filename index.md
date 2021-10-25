@@ -8,10 +8,10 @@ data:
       title: "2\u9032\u6570\u4E0A\u306E\u884C\u5217\u6F14\u7B97"
     - icon: ':heavy_check_mark:'
       path: atcoder/centroid.hpp
-      title: atcoder/centroid.hpp
+      title: "\u6728\u306E\u91CD\u5FC3"
     - icon: ':heavy_check_mark:'
       path: atcoder/combination.hpp
-      title: atcoder/combination.hpp
+      title: "\u7D44\u307F\u5408\u308F\u305B"
     - icon: ':heavy_check_mark:'
       path: atcoder/convolution.hpp
       title: atcoder/convolution.hpp
@@ -23,7 +23,7 @@ data:
       title: atcoder/fenwicktree.hpp
     - icon: ':heavy_check_mark:'
       path: atcoder/fps.hpp
-      title: atcoder/fps.hpp
+      title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
     - icon: ':heavy_check_mark:'
       path: atcoder/hld.hpp
       title: atcoder/hld.hpp
