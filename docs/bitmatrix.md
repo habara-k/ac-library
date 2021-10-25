@@ -9,7 +9,7 @@ $\mathbb{F}_2$ 上での行列演算を `std::bitset` を用いて高速に行�
 
 行列のランクを求めたり, 連立一次方程式を解いたりするときに使う.
 
-## コンストラクタ
+### コンストラクタ
 
 ```cpp
 BitMatirx<MAX_ROW, MAX_COL> A(H, W);
@@ -18,13 +18,10 @@ BitMatirx<MAX_ROW, MAX_COL> A(H, W);
 ### 概要
 
 $H$ 行 $W$ 列の行列を作る. 初期値は `0`.
-
-### 計算量
  
 $O(HW/64)$
 
-
-## ランクの計算
+### ランクの計算
 
 ```cpp
 int GaussJordan(BitMatrix<MAX_ROW, MAX_COL>& A)
@@ -40,8 +37,7 @@ int GaussJordan(BitMatrix<MAX_ROW, MAX_COL>& A)
  
 ランクを $r \le \min(H,W)$ として $O(rHW/64)$.
 
-
-## 連立一次方程式の解き方
+### 連立一次方程式の解き方
 ```cpp
 int linear_equation(const BitMatrix<MAX_ROW, MAX_COL>& A, 
                     const std::vector<bool>& b,
