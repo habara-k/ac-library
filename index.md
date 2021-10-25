@@ -56,7 +56,7 @@ data:
       title: atcoder/math.hpp
     - icon: ':heavy_check_mark:'
       path: atcoder/math_enhanced.hpp
-      title: atcoder/math_enhanced.hpp
+      title: Math Enhanced
     - icon: ':warning:'
       path: atcoder/maxflow.hpp
       title: atcoder/maxflow.hpp

@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: atcoder/math_enhanced.hpp
-    title: atcoder/math_enhanced.hpp
+    title: Math Enhanced
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -29,7 +29,7 @@ data:
   isVerificationFile: true
   path: test/modlog.test.cpp
   requiredBy: []
-  timestamp: '2021-10-22 20:41:06+09:00'
+  timestamp: '2021-10-25 14:39:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/modlog.test.cpp
