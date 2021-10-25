@@ -146,7 +146,7 @@ struct FormalPowerSeries : std::vector<T> {
     // https://arxiv.org/abs/1301.5804 (Figure 1, right)
     F &exp_inplace(int d = -1) {
         int n = int(this->size());
-        assert(n > 0 && (*this)[0] == 0);
+        assert(n >= 0 && (*this)[0] == 0);
         if (d == -1) d = n;
         assert(d >= 0);
         F g{1}, g_fft;
@@ -266,8 +266,8 @@ struct FormalPowerSeries : std::vector<T> {
 using fps = FormalPowerSeries<modint998244353>;
 
 template<typename T>
-T bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T> q, long long n) {
-    while (n > 0) {
+T bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T> q, long long k) {
+    while (k > 0) {
         auto q_ = q;
         for (int i = 1; i < int(q.size()); i += 2) q_[i] *= -1;
 
@@ -277,9 +277,9 @@ T bostan_mori(FormalPowerSeries<T> p, FormalPowerSeries<T> q, long long n) {
         q.resize(i);
 
         p = convolution(move(p), move(q_));
-        for (i = 0; 2*i + (n&1) < (int)(p.size()); i++) p[i] = p[2*i + (n&1)];
+        for (i = 0; 2*i + (k&1) < (int)(p.size()); i++) p[i] = p[2*i + (k&1)];
         p.resize(i);
-        n >>= 1;
+        k >>= 1;
     }
     return p[0] / q[0];
 }

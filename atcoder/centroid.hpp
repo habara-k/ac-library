@@ -8,11 +8,11 @@ namespace atcoder {
 std::vector<int> centroid(const std::vector<std::vector<int>>& g) {
     const int n = int(g.size());
     std::vector<int> sz(n,1), ret;
-    auto dfs = [&](auto self, int u, int p) -> int {
+    auto dfs = [&](auto dfs, int u, int p) -> int {
         bool isCent = true;
         for (int v : g[u]) {
             if (v == p) continue;
-            sz[u] += self(self, v, u);
+            sz[u] += dfs(dfs, v, u);
             if (sz[v] > n / 2) isCent = false;
         }
         if (n - sz[u] > n / 2) isCent = false;
