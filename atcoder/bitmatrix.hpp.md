@@ -82,11 +82,13 @@ layout: document
 title: "2\u9032\u6570\u4E0A\u306E\u884C\u5217\u6F14\u7B97"
 ---
 
+## 概要
+
 $\mathbb{F}_2$ 上での行列演算を `std::bitset` を用いて高速に行う.
 
 行列のランクを求めたり, 連立一次方程式を解いたりするときに使う.
 
-## コンストラクタ
+### コンストラクタ
 
 ```cpp
 BitMatirx<MAX_ROW, MAX_COL> A(H, W);
@@ -94,10 +96,11 @@ BitMatirx<MAX_ROW, MAX_COL> A(H, W);
 
 $H$ 行 $W$ 列の行列を作る. 初期値は `0`.
 
-### 計算量
-- $O(HW/64)$
+- 計算量
+ 
+  $O(HW/64)$
 
-## ランクの計算
+### ランクの計算
 
 ```cpp
 int GaussJordan(BitMatrix<MAX_ROW, MAX_COL>& A)
@@ -107,11 +110,12 @@ int GaussJordan(BitMatrix<MAX_ROW, MAX_COL>& A)
 
 副作用として, 行列 $A$ は行基本変形が適用された標準形となる.
 
-### 計算量
-- ランクを $r \le \min(H,W)$ として $O(rHW/64)$.
+- 計算量
+ 
+  ランクを $r \le \min(H,W)$ として $O(rHW/64)$.
 
 
-## 連立一次方程式の解き方
+### 連立一次方程式の解き方
 ```cpp
 int linear_equation(const BitMatrix<MAX_ROW, MAX_COL>& A, 
                     const std::vector<bool>& b,
@@ -123,5 +127,6 @@ $Ax = b$ を満たす解 $x \in \mathbb{F}_2^H$ を一つ求め, 行列 $A$ の�
 
 解が存在しない場合は `-1` を返す.
 
-### 計算量
-- 行列 $A$ のランクを $r \le \min(H,W)$ として $O(rHW/64)$.
+- 計算量
+
+  行列 $A$ のランクを $r \le \min(H,W)$ として $O(rHW/64)$.
