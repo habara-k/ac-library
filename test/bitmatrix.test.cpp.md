@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: atcoder/bitmatrix.hpp
-    title: atcoder/bitmatrix.hpp
+    title: "2\u9032\u6570\u4E0A\u306E\u884C\u5217\u6F14\u7B97"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
