@@ -68,7 +68,7 @@ data:
       title: atcoder/modint.hpp
     - icon: ':heavy_check_mark:'
       path: atcoder/persistentsegtree.hpp
-      title: atcoder/persistentsegtree.hpp
+      title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     - icon: ':heavy_check_mark:'
       path: atcoder/rbtree.hpp
       title: atcoder/rbtree.hpp
