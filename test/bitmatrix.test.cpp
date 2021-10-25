@@ -30,7 +30,7 @@ int main() {
             int f; cin >> f; b[i] = f;
         }
 
-        int rank = linear_equation(A, b, x);
+        int rank = LinearEquation(A, b, x);
         cout << (rank != -1) << endl;
     }
 }
