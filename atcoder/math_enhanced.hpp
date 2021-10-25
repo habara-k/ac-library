@@ -6,7 +6,10 @@
 
 namespace atcoder {
 
+// https://ei1333.github.io/library/math/combinatorics/mod-log.cpp
 int64_t mod_log(int64_t a, int64_t b, int64_t p) {
+    ((a %= p) += p) %= p;
+    ((b %= p) += p) %= p;
     int64_t g = 1;
     for (int64_t i = p; i; i /= 2) (g *= a) %= p;
     g = std::gcd(g, p);
@@ -40,7 +43,7 @@ int64_t mod_log(int64_t a, int64_t b, int64_t p) {
     return -1;
 }
 
-template<typename T>
+template<class T>
 T extgcd(T a, T b, T &x, T &y) {
     T d = a;
     if (b != 0) {
