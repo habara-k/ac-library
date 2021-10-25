@@ -5,12 +5,12 @@ documentation_of: //atcoder/combination.hpp
 
 ## 概要
 
-- `fact(k)`: $k!$
-- `rfact(k)`: $1/k!$
-- `inv(k)`: $1/k$
-- `P(n, r)`: ${}_nP_r$
-- `C(n, r)`: ${}_nC_r$
-- `H(n, r)`: ${}_nH_r$
+- `fact(k)` : $k!$
+- `rfact(k)` : $1/k!$
+- `inv(k)` : $1/k$
+- `P(n, r)` : ${}_nP_r$
+- `C(n, r)` : ${}_nC_r$
+- `H(n, r)` : ${}_nH_r$
 
 ## 制約
 
@@ -20,5 +20,5 @@ documentation_of: //atcoder/combination.hpp
 
 ## 計算量
 
-- `Combination(sz)`: $O(\mathrm{sz})$
-- クエリ: $O(1)$
+- 初期化 `Combination(sz)` : $O(\mathrm{sz})$
+- クエリ : $O(1)$
