@@ -25,10 +25,12 @@ int main() {
                 }
             }
         }
-        vector<int> b(n*m), res;
-        for (int i = 0; i < n*m; i++) cin>> b[i];
+        vector<bool> b(n*m), x;
+        for (int i = 0; i < n*m; i++) {
+            int f; cin >> f; b[i] = f;
+        }
 
-        int rank = linear_equation(A, b, res);
+        int rank = linear_equation(A, b, x);
         cout << (rank != -1) << endl;
     }
 }

@@ -13,6 +13,7 @@ struct BitMatrix {
     int H, W;
     std::bitset<MAX_COL> val[MAX_ROW];
     BitMatrix(int h, int w) : H(h), W(w) {}
+    const std::bitset<MAX_COL>& operator[](int i) const { return val[i]; }
     std::bitset<MAX_COL>& operator[](int i) { return val[i]; }
 };
 
@@ -51,7 +52,7 @@ int GaussJordan(BitMatrix<MAX_ROW, MAX_COL> &A, bool is_extended = false) {
 }
 
 template<int MAX_ROW = 510, int MAX_COL = 510>
-int linear_equation(BitMatrix<MAX_ROW, MAX_COL> A, std::vector<int> b, std::vector<int> &res) {
+int linear_equation(const BitMatrix<MAX_ROW, MAX_COL>& A, const std::vector<bool>& b, std::vector<bool> &x) {
     int m = A.H, n = A.W;
     BitMatrix<MAX_ROW,MAX_COL> M(m, n + 1);
     for (int i = 0; i < m; ++i) {
@@ -64,10 +65,10 @@ int linear_equation(BitMatrix<MAX_ROW, MAX_COL> A, std::vector<int> b, std::vect
     for (int row = rank; row < m; ++row) if (M[row][n]) return -1;
 
     // answer
-    res.assign(n, 0);
+    x.assign(n, false);
     for (int row = 0, col = 0; row < rank; ++row) {
         while (M[row][col] == 0) ++col;
-        res[col] = M[row][n];
+        x[col] = M[row][n];
     }
     return rank;
 }
