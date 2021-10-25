@@ -13,6 +13,7 @@ struct BitMatrix {
     int H, W;
     std::bitset<MAX_COL> val[MAX_ROW];
     BitMatrix(int h, int w) : H(h), W(w) {}
+    const std::bitset<MAX_COL>& operator[](int i) const { return val[i]; }
     std::bitset<MAX_COL>& operator[](int i) { return val[i]; }
 };
 
