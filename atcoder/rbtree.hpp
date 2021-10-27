@@ -52,7 +52,7 @@ struct rb_tree_node_base {
 };
 
 // Tree
-template<class S, class Node, class Derived>
+template<class S, class Node>
 struct rb_tree_base {
     explicit rb_tree_base(int max_n) : pool(2*max_n-1) {}
 
@@ -177,9 +177,9 @@ struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op>> {
 
 // Tree
 template<class S, S(*op)(S,S), S(*e)()>
-struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op>, rb_segtree<S,op,e>> {
+struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op>> {
     using Node = rb_segtree_node<S,op>;
-    using Base = rb_tree_base<S, Node, rb_segtree<S,op,e>>;
+    using Base = rb_tree_base<S, Node>;
     using Base::Base, Base::split, Base::merge, Base::size, Base::root;
     S prod(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
@@ -222,9 +222,9 @@ struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S
 
 // Tree
 template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree : public rb_tree_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>, rb_lazy_segtree<S,op,e,F,mapping,composition,id>> {
+struct rb_lazy_segtree : public rb_tree_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>> {
     using Node = rb_lazy_segtree_node<S,op,F,mapping,composition,id>;
-    using Base = rb_tree_base<S, Node, rb_lazy_segtree<S,op,e,F,mapping,composition,id>>;
+    using Base = rb_tree_base<S, Node>;
     using Base::Base, Base::split, Base::merge, Base::size, Base::root;
     S prod(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
@@ -284,9 +284,9 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
 
 // Tree
 template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>> {
+struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>> {
     using Node = rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>;
-    using Base = rb_tree_base<S, Node, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>>;
+    using Base = rb_tree_base<S, Node>;
     using Base::Base, Base::split, Base::merge, Base::size, Base::root;
     S prod(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
