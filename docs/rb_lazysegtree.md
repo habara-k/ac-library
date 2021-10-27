@@ -5,7 +5,7 @@ documentation_of: //atcoder/rb_lazysegtree.hpp
 
 ## 概要
 
-挿入と削除が $O(\log N)$ でできる遅延セグメント木.
+挿入と削除が $O(\log n)$ でできる遅延セグメント木.
 
 - `insert(k, x)` : $k$ 番目に $x$ を挿入する.
 - `erase(k)` : $k$ 番目の要素を削除する.

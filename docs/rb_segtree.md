@@ -5,7 +5,7 @@ documentation_of: //atcoder/rb_segtree.hpp
 
 ## 概要
 
-挿入と削除が $O(\log N)$ でできるセグメント木.
+挿入と削除が $O(\log n)$ でできるセグメント木.
 
 - `insert(k, x)` : $k$ 番目に $x$ を挿入する.
 - `erase(k)` : $k$ 番目の要素を削除する.
