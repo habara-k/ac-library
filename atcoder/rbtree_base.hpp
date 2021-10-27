@@ -54,6 +54,12 @@ template<class S, class Node>
 struct rb_tree_base {
     using ptr = Node*;
     ptr root;
+    // Ensure: root is null or valid
+
+    // valid <=>
+    // - The root and leaves are black
+    // - Red nodes are not adjacent
+    // - The number of black nodes on the root-to-leaf path is constant
 
     explicit rb_tree_base(int max_n) : pool(2*max_n-1) {}
 
@@ -89,13 +95,18 @@ struct rb_tree_base {
     }
 
     ptr merge(ptr a, ptr b) {
+        // Require:
+        // - a, b: null or valid
         if (!a) return b;
         if (!b) return a;
-        ptr c = mergeSub(a, b);
-        return asRoot(c);
+        return asRoot(mergeSub(a, b));
     }
 
     std::pair<ptr, ptr> split(ptr p, int k) {
+        // Require:
+        // - p: null or asRoot(p) is valid
+        // Ensure:
+        // - returned nodes are null or valid
         assert(0 <= k and k <= sz(p));
         if (k == 0) return { nullptr, p };
         if (k == sz(p)) return { p, nullptr };
@@ -125,13 +136,17 @@ private:
     }
 
     ptr mergeSub(ptr a, ptr b) {
+        // Require:
+        // - asRoot(a), asRoot(b) is valid
+        // Ensure:
+        // - asRoot(returned node) is valid
+        // - (returned node)->rnk = max(a->rnk, b->rnk)
         assert(a != nullptr);
         assert(b != nullptr);
-        if (a->rnk < b->rnk) {
+        if (a->rnk < b->rnk or (a->rnk == b->rnk and b->red)) {
             ptr l = b->l, r = b->r;
             bool red = b->red;
             pool.free(b);
-
             ptr c = mergeSub(a, l);
             if (red or !c->red or !c->l->red) return pool.alloc(c, r, red);
             if (r->red) return pool.alloc(asRoot(c), asRoot(r), R);
@@ -139,11 +154,10 @@ private:
             pool.free(c);
             return pool.alloc(cl, pool.alloc(cr, r, R), B);
         }
-        if (a->rnk > b->rnk) {
+        if (a->rnk > b->rnk or (a->rnk == b->rnk and a->red)) {
             ptr l = a->l, r = a->r;
             bool red = a->red;
             pool.free(a);
-
             ptr c = mergeSub(r, b);
             if (red or !c->red or !c->r->red) return pool.alloc(l, c, red);
             if (l->red) return pool.alloc(asRoot(l), asRoot(c), R);
