@@ -13,6 +13,7 @@
 "test/hld.test.cpp": "2021-10-22 20:41:06 +0900",
 "test/modlog.test.cpp": "2021-10-25 14:39:47 +0900",
 "test/persistentsegtree.test.cpp": "2021-10-25 15:36:59 +0900",
+"test/redblacklazysegtree.test.cpp": "2021-10-28 02:27:33 +0900",
 "test/rerooting.test.cpp": "2021-10-22 20:41:06 +0900",
 "test/rollinghash.test.cpp": "2021-10-22 20:41:06 +0900",
 "test/segment_map.test.cpp": "2021-10-22 20:41:06 +0900",
