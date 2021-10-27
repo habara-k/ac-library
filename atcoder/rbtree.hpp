@@ -173,7 +173,7 @@ struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op>> {
     using Base::Base;
     using ptr = rb_segtree_node*;
     rb_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
-        Base::val = op(Base::l->val,Base::r->val);
+        Base::val = op(Base::l->val, Base::r->val);
     }
 };
 
@@ -209,7 +209,7 @@ struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S
     F lazy = id();
     using ptr = rb_lazy_segtree_node*;
     rb_lazy_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
-        Base::val = op(Base::l->val,Base::r->val);
+        val = op(l->val, r->val);
     }
     ~rb_lazy_segtree_node() {
         if (lazy != id()) {
@@ -265,7 +265,7 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
     bool rev = false;
     using ptr = rb_lazy_segtree_reversible_node*;
     rb_lazy_segtree_reversible_node(ptr l_, ptr r_, int red_) :
-        Base(l_, r_, red_) { Base::val = op(Base::l->val,Base::r->val); }
+        Base(l_, r_, red_) { val = op(l->val, r->val); }
     ~rb_lazy_segtree_reversible_node() {
         if (lazy != id()) {
             l = applied(l, lazy);
