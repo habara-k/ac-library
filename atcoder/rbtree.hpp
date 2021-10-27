@@ -35,8 +35,9 @@ struct VectorPool {
 // https://github.com/atcoder/ac-library/blob/master/atcoder/lazysegtree.hpp
 // https://suisen-cp.github.io/cp-library-cpp/library/datastructure/lazy_eval_dynamic_sequence.hpp
 
-// Node
 
+// Base Class
+// Node
 template<class S, class Derived>
 struct rb_tree_node_base {
     using ptr = Derived*;
@@ -50,85 +51,50 @@ struct rb_tree_node_base {
         l(l_), r(r_), sz(l->sz + r->sz), rnk(l->rnk + !l->red), red(red_) {}
 };
 
-template<class S, S(*op)(S,S), S(*e)()>
-struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op, e>> {
-    using Base = rb_tree_node_base<S, rb_segtree_node<S, op, e>>;
-    using Base::Base;
-    rb_segtree_node(rb_segtree_node *l_, rb_segtree_node *r_, int red_) : Base(l_, r_, red_) {
-        Base::val = op(Base::l->val,Base::r->val);
-    }
-};
-
-template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S,op,e,F,mapping,composition,id>> {
-    using Base = rb_tree_node_base<S, rb_lazy_segtree_node<S,op,e,F,mapping,composition,id>>;
-    using Base::Base, Base::l, Base::r, Base::val;
-    F lazy = id();
-    rb_lazy_segtree_node(rb_lazy_segtree_node *l_, rb_lazy_segtree_node *r_, int red_) : Base(l_, r_, red_) {
-        Base::val = op(Base::l->val,Base::r->val);
-    }
-    ~rb_lazy_segtree_node() {
-        if (lazy != id()) {
-            l->apply(lazy);
-            r->apply(lazy);
-        }
-    }
-private:
-    void apply(const F& laz) {
-        val = mapping(laz, val);
-        if (l) lazy = composition(lazy, laz);
-    }
-};
-
-template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,e,F,mapping,composition,id>> {
-    using Base = rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,e,F,mapping,composition,id>>;
-    using Base::Base, Base::l, Base::r, Base::val;
-    F lazy = id();
-    bool rev = false;
-    rb_lazy_segtree_reversible_node(rb_lazy_segtree_reversible_node *l_, rb_lazy_segtree_reversible_node *r_, int red_) :
-        Base(l_, r_, red_) { Base::val = op(Base::l->val,Base::r->val); }
-    ~rb_lazy_segtree_reversible_node() {
-        if (lazy != id()) {
-            l->apply(lazy);
-            r->apply(lazy);
-        }
-        if (rev) {
-            l->reverse();
-            r->reverse();
-        }
-    }
-private:
-    void apply(const F& laz) {
-        val = mapping(laz, val);
-        if (l) lazy = composition(lazy, laz);
-    }
-    void reverse() {
-        std::swap(l, r);
-        if (l) rev ^= 1;
-    }
-};
-
-
 // Tree
-
 template<class S, class Node, class Derived>
 struct rb_tree_base {
-    static const bool R = true, B = false;
-
-    using ptr = Node*;
-
-    VectorPool<Node> pool;
-    ptr root;
-
     explicit rb_tree_base(int max_n) : pool(2*max_n-1) {}
 
     int size() { return size(root); }
-    int size(ptr p) { return p ? p->sz : 0; }
 
     void build(const std::vector<S>& v) {
         root = build(v, 0, int(v.size()));
     }
+
+    void insert(int k, S val) {
+        assert(0 <= k and k <= size());
+        auto [l, r] = split(root, k);
+        root = merge(merge(l, pool.alloc(val)), r);
+    }
+
+    S erase(int k) {
+        assert(0 <= k and k < size());
+        auto [l, tmp] = split(root, k);
+        auto [c, r] = split(tmp, 1);
+        S val = c->val;
+        pool.free(c);
+        root = merge(l, r);
+        return val;
+    }
+
+    S get(int k) {
+        assert(0 <= k and k < size());
+        auto [a, tmp] = split(root, k);
+        auto [c, b] = split(tmp, 1);
+        S val = c->val;
+        root = merge(a, merge(c, b));
+        return val;
+    }
+
+    static const bool R = true, B = false;
+
+    VectorPool<Node> pool;
+
+    using ptr = Node*;
+    ptr root;
+
+    int size(ptr p) { return p ? p->sz : 0; }
 
     ptr merge(ptr a, ptr b) {
         if (!a) return b;
@@ -153,31 +119,6 @@ struct rb_tree_base {
         }
         return { asRoot(l), asRoot(r) };
     }
-
-    void insert(int k, S val) {
-        assert(0 <= k and k <= size());
-        auto [l, r] = split(root, k);
-        root = merge(merge(l, pool.alloc(val)), r);
-    }
-    S erase(int k) {
-        assert(0 <= k and k < size());
-        auto [l, tmp] = split(root, k);
-        auto [c, r] = split(tmp, 1);
-        S val = c->val;
-        pool.free(c);
-        root = merge(l, r);
-        return val;
-    }
-    S get(int k) {
-        assert(0 <= k and k < size());
-        auto [a, tmp] = split(root, k);
-        auto [c, b] = split(tmp, 1);
-        S val = c->val;
-        root = merge(a, merge(c, b));
-        return val;
-    }
-
-private:
 
     ptr build(const std::vector<S>& v, int l, int r) {
         if (r - l == 1) return pool.alloc(v[l]);
@@ -220,11 +161,25 @@ private:
         return p;
     }
 };
+// End of Base Class
 
 
+// Segtree
+// Node
+template<class S, S(*op)(S,S)>
+struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op>> {
+    using Base = rb_tree_node_base<S, rb_segtree_node<S, op>>;
+    using Base::Base;
+    rb_segtree_node(rb_segtree_node *l_, rb_segtree_node *r_, int red_) : Base(l_, r_, red_) {
+        Base::val = op(Base::l->val,Base::r->val);
+    }
+};
+
+// Tree
 template<class S, S(*op)(S,S), S(*e)()>
-struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op,e>, rb_segtree<S,op,e>> {
-    using Base = rb_tree_base<S, rb_segtree_node<S,op,e>, rb_segtree<S,op,e>>;
+struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op>, rb_segtree<S,op,e>> {
+    using Node = rb_segtree_node<S,op>;
+    using Base = rb_tree_base<S, Node, rb_segtree<S,op,e>>;
     using Base::Base, Base::split, Base::merge, Base::size, Base::root;
     S prod(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
@@ -237,31 +192,26 @@ struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op,e>, rb_segtree<S
         return val;
     }
 };
+// End of Segtree
 
-template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree : public rb_tree_base<S, rb_lazy_segtree_node<S,op,e,F,id,mapping,composition>, rb_lazy_segtree<S,op,e,F,mapping,composition,id>> {
-    using Base = rb_tree_base<S, rb_lazy_segtree_node<S,op,e,F,id,mapping,composition>, rb_lazy_segtree<S,op,e,F,mapping,composition,id>>;
-    using Base::Base, Base::split, Base::merge, Base::size, Base::root;
-    using ptr = rb_lazy_segtree_node<S,op,e,F,mapping,composition,id>*;
-    S prod(int l, int r) {
-        assert(0 <= l and l <= r and r <= size());
-        if (l == r) return e();
 
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        S val = c->val;
-        root = merge(a, merge(c, b));
-        return val;
+// Lazy Segtree
+// Node
+template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
+struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>> {
+    using Base = rb_tree_node_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>>;
+    using Base::Base, Base::l, Base::r, Base::val;
+    F lazy = id();
+    rb_lazy_segtree_node(rb_lazy_segtree_node *l_, rb_lazy_segtree_node *r_, int red_) : Base(l_, r_, red_) {
+        Base::val = op(Base::l->val,Base::r->val);
     }
-    void apply(int l, int r, F lazy) {
-        assert(0 <= l and l <= r and r <= size());
-        if (l == r) return;
-
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        root = merge(a, merge(applied(c, lazy), b));
+    ~rb_lazy_segtree_node() {
+        if (lazy != id()) {
+            l = applied(l, lazy);
+            r = applied(r, lazy);
+        }
     }
-private:
+    using ptr = rb_lazy_segtree_node<S,op,F,mapping,composition,id>*;
     static ptr applied(ptr p, const F& lazy) {
         assert(p != nullptr);
         p->val = mapping(lazy, p->val);
@@ -270,12 +220,12 @@ private:
     }
 };
 
-
+// Tree
 template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,e,F,mapping,composition,id>, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>> {
-    using Base = rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,e,F,mapping,composition,id>, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>>;
+struct rb_lazy_segtree : public rb_tree_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>, rb_lazy_segtree<S,op,e,F,mapping,composition,id>> {
+    using Node = rb_lazy_segtree_node<S,op,F,mapping,composition,id>;
+    using Base = rb_tree_base<S, Node, rb_lazy_segtree<S,op,e,F,mapping,composition,id>>;
     using Base::Base, Base::split, Base::merge, Base::size, Base::root;
-    using ptr = rb_lazy_segtree_reversible_node<S,op,e,F,mapping,composition,id>*;
     S prod(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
         if (l == r) return e();
@@ -292,17 +242,32 @@ struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_rever
 
         auto [a, tmp] = split(root, l);
         auto [c, b] = split(tmp, r-l);
-        root = merge(a, merge(applied(c, lazy), b));
+        root = merge(a, merge(Node::applied(c, lazy), b));
     }
-    void reverse(int l, int r) {
-        assert(0 <= l and l <= r and r <= size());
-        if (l == r) return;
+};
+// End of Lazy Segtree
 
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        root = merge(a, merge(reversed(c), b));
+
+// Lazy Segtree Reversible
+template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
+struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>> {
+    using Base = rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>>;
+    using Base::Base, Base::l, Base::r, Base::val;
+    F lazy = id();
+    bool rev = false;
+    rb_lazy_segtree_reversible_node(rb_lazy_segtree_reversible_node *l_, rb_lazy_segtree_reversible_node *r_, int red_) :
+        Base(l_, r_, red_) { Base::val = op(Base::l->val,Base::r->val); }
+    ~rb_lazy_segtree_reversible_node() {
+        if (lazy != id()) {
+            l = applied(l, lazy);
+            r = applied(r, lazy);
+        }
+        if (rev) {
+            l = reversed(l);
+            r = reversed(r);
+        }
     }
-private:
+    using ptr = rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>*;
     static ptr applied(ptr p, const F& lazy) {
         assert(p != nullptr);
         p->val = mapping(lazy, p->val);
@@ -316,6 +281,41 @@ private:
         return p;
     }
 };
+
+// Tree
+template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
+struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>> {
+    using Node = rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>;
+    using Base = rb_tree_base<S, Node, rb_lazy_segtree_reversible<S,op,e,F,mapping,composition,id>>;
+    using Base::Base, Base::split, Base::merge, Base::size, Base::root;
+    S prod(int l, int r) {
+        assert(0 <= l and l <= r and r <= size());
+        if (l == r) return e();
+
+        auto [a, tmp] = split(root, l);
+        auto [c, b] = split(tmp, r-l);
+        S val = c->val;
+        root = merge(a, merge(c, b));
+        return val;
+    }
+    void apply(int l, int r, F lazy) {
+        assert(0 <= l and l <= r and r <= size());
+        if (l == r) return;
+
+        auto [a, tmp] = split(root, l);
+        auto [c, b] = split(tmp, r-l);
+        root = merge(a, merge(Node::applied(c, lazy), b));
+    }
+    void reverse(int l, int r) {
+        assert(0 <= l and l <= r and r <= size());
+        if (l == r) return;
+
+        auto [a, tmp] = split(root, l);
+        auto [c, b] = split(tmp, r-l);
+        root = merge(a, merge(Node::reversed(c), b));
+    }
+};
+// End of Lazy Segtree Reversible
 
 }  // namespace atcoder
 
