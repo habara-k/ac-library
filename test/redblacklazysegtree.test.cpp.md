@@ -2,8 +2,11 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: atcoder/rbtree.hpp
-    title: atcoder/rbtree.hpp
+    path: atcoder/rb_lazysegtree.hpp
+    title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u8D64\u9ED2\u6728"
+  - icon: ':heavy_check_mark:'
+    path: atcoder/rbtree_base.hpp
+    title: "\u8D64\u9ED2\u6728"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -15,7 +18,7 @@ data:
     links:
     - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508
   bundledCode: "#line 1 \"test/redblacklazysegtree.test.cpp\"\n#define PROBLEM \"\
-    http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508\"\n\n#include <atcoder/rbtree>\n\
+    http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508\"\n\n#include <atcoder/rb_lazysegtree>\n\
     #include <iostream>\n#include <limits>\n\nusing namespace atcoder;\nusing namespace\
     \ std;\n\nint op(int a, int b) { return min(a,b); }\nint e() { return numeric_limits<int>::max();\
     \ }\nint id() { return numeric_limits<int>::max(); }\nint mapping(int a, int b)\
@@ -31,13 +34,14 @@ data:
     \ >> pos >> val;\n            tree.apply(pos, pos+1, val);\n        }\n    }\n\
     \    return 0;\n}\n"
   code: "#define PROBLEM \"http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508\"\
-    \n\n#include <atcoder/rbtree>\n#include <iostream>\n#include <limits>\n\nusing\
-    \ namespace atcoder;\nusing namespace std;\n\nint op(int a, int b) { return min(a,b);\
-    \ }\nint e() { return numeric_limits<int>::max(); }\nint id() { return numeric_limits<int>::max();\
-    \ }\nint mapping(int a, int b) {\n    if (a==id()) return b;\n    return a;\n\
-    }\nint composition(int a, int b) {\n    if (a==id()) return b;\n    if (b==id())\
-    \ return a;\n    return b;\n}\n\nint main() {\n    int n, q; cin >> n >> q;\n\
-    \    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n    rb_lazy_segtree<int,op,e,int,mapping,composition,id>\
+    \n\n#include <atcoder/rb_lazysegtree>\n#include <iostream>\n#include <limits>\n\
+    \nusing namespace atcoder;\nusing namespace std;\n\nint op(int a, int b) { return\
+    \ min(a,b); }\nint e() { return numeric_limits<int>::max(); }\nint id() { return\
+    \ numeric_limits<int>::max(); }\nint mapping(int a, int b) {\n    if (a==id())\
+    \ return b;\n    return a;\n}\nint composition(int a, int b) {\n    if (a==id())\
+    \ return b;\n    if (b==id()) return a;\n    return b;\n}\n\nint main() {\n  \
+    \  int n, q; cin >> n >> q;\n    vector<int> a(n);\n    for (int i = 0; i < n;\
+    \ i++) cin >> a[i];\n    rb_lazy_segtree<int,op,e,int,mapping,composition,id>\
     \ tree(n);\n    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n\
     \        if (t == 0) {\n            int l, r; cin >> l >> r;\n            int\
     \ val = tree.erase(r);\n            tree.insert(l, val);\n        }\n        if\
@@ -46,11 +50,12 @@ data:
     \ >> pos >> val;\n            tree.apply(pos, pos+1, val);\n        }\n    }\n\
     \    return 0;\n}\n"
   dependsOn:
-  - atcoder/rbtree.hpp
+  - atcoder/rb_lazysegtree.hpp
+  - atcoder/rbtree_base.hpp
   isVerificationFile: true
   path: test/redblacklazysegtree.test.cpp
   requiredBy: []
-  timestamp: '2021-10-27 22:09:43+09:00'
+  timestamp: '2021-10-28 04:21:52+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/redblacklazysegtree.test.cpp

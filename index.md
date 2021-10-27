@@ -70,8 +70,18 @@ data:
       path: atcoder/persistentsegtree.hpp
       title: "\u6C38\u7D9A\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     - icon: ':heavy_check_mark:'
-      path: atcoder/rbtree.hpp
-      title: atcoder/rbtree.hpp
+      path: atcoder/rb_lazysegtree.hpp
+      title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u8D64\u9ED2\u6728"
+    - icon: ':heavy_check_mark:'
+      path: atcoder/rb_lazysegtree_reversible.hpp
+      title: "\u53CD\u8EE2\u53EF\u80FD\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u8D64\
+        \u9ED2\u6728"
+    - icon: ':warning:'
+      path: atcoder/rb_segtree.hpp
+      title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u8D64\u9ED2\u6728"
+    - icon: ':heavy_check_mark:'
+      path: atcoder/rbtree_base.hpp
+      title: "\u8D64\u9ED2\u6728"
     - icon: ':heavy_check_mark:'
       path: atcoder/rerooting.hpp
       title: atcoder/rerooting.hpp
