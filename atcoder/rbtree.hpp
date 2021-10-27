@@ -49,6 +49,7 @@ struct rb_tree_node_base {
     explicit rb_tree_node_base(S val_) : val(val_) {}
     rb_tree_node_base(ptr l_, ptr r_, int red_) :
         l(l_), r(r_), sz(l->sz + r->sz), rnk(l->rnk + !l->red), red(red_) {}
+    bool isLeaf() { return l != nullptr; }
 };
 
 // Tree
@@ -205,7 +206,7 @@ public:
 template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
 struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>> {
     using Base = rb_tree_node_base<S, rb_lazy_segtree_node>;
-    using Base::Base, Base::l, Base::r, Base::val;
+    using Base::Base, Base::l, Base::r, Base::val, Base::isLeaf;
     F lazy = id();
     using ptr = rb_lazy_segtree_node*;
     rb_lazy_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
@@ -213,6 +214,7 @@ struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S
     }
     ~rb_lazy_segtree_node() {
         if (lazy != id()) {
+            assert(!isLeaf());
             l = applied(l, lazy);
             r = applied(r, lazy);
         }
@@ -220,7 +222,7 @@ struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S
     static ptr applied(ptr p, const F& lazy) {
         assert(p != nullptr);
         p->val = mapping(lazy, p->val);
-        if (p->l) p->lazy = composition(p->lazy, lazy);
+        if (!p->isLeaf()) p->lazy = composition(p->lazy, lazy);
         return p;
     }
 };
@@ -260,7 +262,7 @@ public:
 template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
 struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>> {
     using Base = rb_tree_node_base<S, rb_lazy_segtree_reversible_node>;
-    using Base::Base, Base::l, Base::r, Base::val;
+    using Base::Base, Base::l, Base::r, Base::val, Base::isLeaf;
     F lazy = id();
     bool rev = false;
     using ptr = rb_lazy_segtree_reversible_node*;
@@ -268,10 +270,12 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
         Base(l_, r_, red_) { val = op(l->val, r->val); }
     ~rb_lazy_segtree_reversible_node() {
         if (lazy != id()) {
+            assert(!isLeaf());
             l = applied(l, lazy);
             r = applied(r, lazy);
         }
         if (rev) {
+            assert(!isLeaf());
             l = reversed(l);
             r = reversed(r);
         }
@@ -279,13 +283,13 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
     static ptr applied(ptr p, const F& lazy) {
         assert(p != nullptr);
         p->val = mapping(lazy, p->val);
-        if (p->l) p->lazy = composition(p->lazy, lazy);
+        if (!p->isLeaf()) p->lazy = composition(p->lazy, lazy);
         return p;
     }
     static ptr reversed(ptr p) {
         assert(p != nullptr);
         std::swap(p->l, p->r);
-        if (p->l) p->rev ^= 1;
+        if (!p->isLeaf()) p->rev ^= 1;
         return p;
     }
 };
