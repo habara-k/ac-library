@@ -47,7 +47,7 @@ struct rb_tree_node_base {
     explicit rb_tree_node_base(S val_) : val(val_) {}
     rb_tree_node_base(ptr l_, ptr r_, int red_) :
             l(l_), r(r_), sz(l->sz + r->sz), rnk(l->rnk + !l->red), red(red_) {}
-    bool isLeaf() { return l != nullptr; }
+    bool isLeaf() { return l == nullptr; }
 };
 
 template<class S, class Node>
