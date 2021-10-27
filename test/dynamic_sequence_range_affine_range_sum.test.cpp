@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/dynamic_sequence_range_affine_range_sum"
 
-#include <atcoder/rbtree>
+#include <atcoder/rb_lazysegtree_reversible>
 #include <atcoder/modint>
 #include <iostream>
 #include <limits>
@@ -38,6 +38,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         int x; cin >> x; a[i].x = x, a[i].len = 1;
     }
+
     rb_lazy_segtree_reversible<node,op,e,affine,mapping,composition,id> tree(n+q);
     tree.build(a);
     while (q--) {
