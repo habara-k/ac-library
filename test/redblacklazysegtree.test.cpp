@@ -1,6 +1,6 @@
 #define PROBLEM "http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508"
 
-#include <atcoder/rbtree>
+#include <atcoder/rb_lazysegtree>
 #include <iostream>
 #include <limits>
 
