@@ -38,13 +38,13 @@ template<class S, class Derived>
 struct rb_tree_node_base {
     using ptr = Derived*;
     ptr l=nullptr, r=nullptr;
-    int sz=1, rnk=0;
+    int size=1, rank=0;
     bool red=false;
     S val;
     rb_tree_node_base() = default;
     explicit rb_tree_node_base(S val_) : val(val_) {}
     rb_tree_node_base(ptr l_, ptr r_, int red_) :
-            l(l_), r(r_), sz(l->sz + r->sz), rnk(l->rnk + !l->red), red(red_) {}
+            l(l_), r(r_), size(l->size + r->size), rank(l->rank + !l->red), red(red_) {}
     bool isLeaf() { return l == nullptr; }
 };
 
@@ -122,11 +122,11 @@ struct rb_tree_base {
     }
 
 private:
-    static const bool R = true, B = false;
+    static const bool RED = true, BLACK = false;
 
     VectorPool<Node> pool;
 
-    int sz(ptr p) { return p ? p->sz : 0; }
+    int sz(ptr p) { return p ? p->size : 0; }
 
     ptr build(const std::vector<S>& v, int l, int r) {
         if (r - l == 1) return pool.alloc(v[l]);
@@ -138,37 +138,37 @@ private:
         // - asRoot(a), asRoot(b) is valid
         // Ensure:
         // - asRoot(returned node) is valid
-        // - (returned node)->rnk = max(a->rnk, b->rnk)
+        // - (returned node)->rank = max(a->rank, b->rank)
         assert(a != nullptr);
         assert(b != nullptr);
-        if (a->rnk < b->rnk or (a->rnk == b->rnk and b->red)) {
+        if (a->rank < b->rank or (a->rank == b->rank and b->red)) {
             ptr l = b->l, r = b->r;
             bool red = b->red;
             pool.free(b);
             ptr c = mergeSub(a, l);
             if (red or !c->red or !c->l->red) return pool.alloc(c, r, red);
-            if (r->red) return pool.alloc(asRoot(c), asRoot(r), R);
+            if (r->red) return pool.alloc(asRoot(c), asRoot(r), RED);
             ptr cl = c->l, cr = c->r;
             pool.free(c);
-            return pool.alloc(cl, pool.alloc(cr, r, R), B);
+            return pool.alloc(cl, pool.alloc(cr, r, RED), BLACK);
         }
-        if (a->rnk > b->rnk or (a->rnk == b->rnk and a->red)) {
+        if (a->rank > b->rank or (a->rank == b->rank and a->red)) {
             ptr l = a->l, r = a->r;
             bool red = a->red;
             pool.free(a);
             ptr c = mergeSub(r, b);
             if (red or !c->red or !c->r->red) return pool.alloc(l, c, red);
-            if (l->red) return pool.alloc(asRoot(l), asRoot(c), R);
+            if (l->red) return pool.alloc(asRoot(l), asRoot(c), RED);
             ptr cl = c->l, cr = c->r;
             pool.free(c);
-            return pool.alloc(pool.alloc(l, cl, R), cr, B);
+            return pool.alloc(pool.alloc(l, cl, RED), cr, BLACK);
         }
-        return pool.alloc(a, b, R);
+        return pool.alloc(a, b, RED);
     }
 
     ptr asRoot(ptr p) {
         if (!p) return p;
-        p->red = B;
+        p->red = BLACK;
         return p;
     }
 };
