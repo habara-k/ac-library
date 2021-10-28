@@ -46,18 +46,19 @@ data:
     \ < size());\n        auto [a, tmp] = split(root, k);\n        auto [c, b] = split(tmp,\
     \ 1);\n        S val = c->val;\n        root = merge(a, merge(c, b));\n      \
     \  return val;\n    }\n\n    ptr merge(ptr a, ptr b) {\n        // Require:\n\
-    \        // - a, b: null or valid\n        if (!a) return b;\n        if (!b)\
-    \ return a;\n        return asRoot(mergeSub(a, b));\n    }\n\n    std::pair<ptr,\
-    \ ptr> split(ptr p, int k) {\n        // Require:\n        // - p: null or asRoot(p)\
-    \ is valid\n        // Ensure:\n        // - returned nodes are null or valid\n\
-    \        assert(0 <= k and k <= sz(p));\n        if (k == 0) return { nullptr,\
-    \ p };\n        if (k == sz(p)) return { p, nullptr };\n        ptr l = p->l,\
-    \ r = p->r;\n        pool.free(p);\n        if (k < sz(l)) {\n            auto\
-    \ [a, b] = split(l, k);\n            return { a, merge(b, asRoot(r)) };\n    \
-    \    }\n        if (k > sz(l)) {\n            auto [a, b] = split(r, k - sz(l));\n\
-    \            return { merge(asRoot(l), a), b };\n        }\n        return { asRoot(l),\
-    \ asRoot(r) };\n    }\n\nprivate:\n    static const bool RED = true, BLACK = false;\n\
-    \n    VectorPool<Node> pool;\n\n    int sz(ptr p) { return p ? p->size : 0; }\n\
+    \        // - a, b: null or valid\n        // Ensure:\n        // - returned node\
+    \ is valid\n        if (!a) return b;\n        if (!b) return a;\n        return\
+    \ asRoot(mergeSub(a, b));\n    }\n\n    std::pair<ptr, ptr> split(ptr p, int k)\
+    \ {\n        // Require:\n        // - p: null or asRoot(p) is valid\n       \
+    \ // Ensure:\n        // - returned nodes are null or valid\n        assert(0\
+    \ <= k and k <= sz(p));\n        if (k == 0) return { nullptr, p };\n        if\
+    \ (k == sz(p)) return { p, nullptr };\n        ptr l = p->l, r = p->r;\n     \
+    \   pool.free(p);\n        if (k < sz(l)) {\n            auto [a, b] = split(l,\
+    \ k);\n            return { a, merge(b, asRoot(r)) };\n        }\n        if (k\
+    \ > sz(l)) {\n            auto [a, b] = split(r, k - sz(l));\n            return\
+    \ { merge(asRoot(l), a), b };\n        }\n        return { asRoot(l), asRoot(r)\
+    \ };\n    }\n\nprivate:\n    static const bool RED = true, BLACK = false;\n\n\
+    \    VectorPool<Node> pool;\n\n    int sz(ptr p) { return p ? p->size : 0; }\n\
     \n    ptr build(const std::vector<S>& v, int l, int r) {\n        if (r - l ==\
     \ 1) return pool.alloc(v[l]);\n        return merge(build(v, l, (l+r)/2), build(v,\
     \ (l+r)/2, r));\n    }\n\n    ptr mergeSub(ptr a, ptr b) {\n        // Require:\n\
@@ -134,7 +135,7 @@ data:
   isVerificationFile: false
   path: atcoder/rb_lazysegtree.hpp
   requiredBy: []
-  timestamp: '2021-10-28 14:52:50+09:00'
+  timestamp: '2021-10-28 15:04:10+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - test/redblacklazysegtree.test.cpp
