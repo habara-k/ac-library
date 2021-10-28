@@ -11,7 +11,7 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
     using Base::Base, Base::l, Base::r, Base::val, Base::isLeaf;
     F lazy = id();
     bool rev = false;
-    using ptr = rb_lazy_segtree_reversible_node*;
+    using ptr = typename Base::ptr;
     rb_lazy_segtree_reversible_node(ptr l_, ptr r_, int red_) :
             Base(l_, r_, red_) { val = op(l->val, r->val); }
     ~rb_lazy_segtree_reversible_node() {

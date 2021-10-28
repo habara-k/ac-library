@@ -15,8 +15,6 @@ struct VectorPool {
     std::vector<T*> stock;
     int size = 0;
 
-    VectorPool() = default;
-
     explicit VectorPool(int sz) : pool(sz), stock(sz) { clear(); }
 
     template<typename... U>
@@ -52,7 +50,7 @@ struct rb_tree_node_base {
 
 template<class S, class Node>
 struct rb_tree_base {
-    using ptr = Node*;
+    using ptr = typename Node::ptr;
     ptr root;
     // Ensure: root is null or valid
 
