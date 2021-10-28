@@ -95,6 +95,8 @@ struct rb_tree_base {
     ptr merge(ptr a, ptr b) {
         // Require:
         // - a, b: null or valid
+        // Ensure:
+        // - returned node is valid
         if (!a) return b;
         if (!b) return a;
         return asRoot(mergeSub(a, b));
