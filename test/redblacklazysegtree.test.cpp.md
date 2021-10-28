@@ -55,7 +55,7 @@ data:
   isVerificationFile: true
   path: test/redblacklazysegtree.test.cpp
   requiredBy: []
-  timestamp: '2021-10-28 04:21:52+09:00'
+  timestamp: '2021-10-28 14:52:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/redblacklazysegtree.test.cpp
