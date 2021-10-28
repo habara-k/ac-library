@@ -9,7 +9,7 @@ template<class S, S(*op)(S,S)>
 struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op>> {
     using Base = rb_tree_node_base<S, rb_segtree_node>;
     using Base::Base;
-    using ptr = rb_segtree_node*;
+    using ptr = typename Base::ptr;
     rb_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
         Base::val = op(Base::l->val, Base::r->val);
     }
