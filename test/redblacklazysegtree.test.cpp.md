@@ -25,7 +25,7 @@ data:
     \ {\n    if (a==id()) return b;\n    return a;\n}\nint composition(int a, int\
     \ b) {\n    if (a==id()) return b;\n    if (b==id()) return a;\n    return b;\n\
     }\n\nint main() {\n    int n, q; cin >> n >> q;\n    vector<int> a(n);\n    for\
-    \ (int i = 0; i < n; i++) cin >> a[i];\n    rb_lazy_segtree<int,op,e,int,mapping,composition,id>\
+    \ (int i = 0; i < n; i++) cin >> a[i];\n    RBLazySegtree<int,op,e,int,mapping,composition,id>\
     \ tree(n);\n    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n\
     \        if (t == 0) {\n            int l, r; cin >> l >> r;\n            int\
     \ val = tree.erase(r);\n            tree.insert(l, val);\n        }\n        if\
@@ -41,21 +41,20 @@ data:
     \ return b;\n    return a;\n}\nint composition(int a, int b) {\n    if (a==id())\
     \ return b;\n    if (b==id()) return a;\n    return b;\n}\n\nint main() {\n  \
     \  int n, q; cin >> n >> q;\n    vector<int> a(n);\n    for (int i = 0; i < n;\
-    \ i++) cin >> a[i];\n    rb_lazy_segtree<int,op,e,int,mapping,composition,id>\
-    \ tree(n);\n    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n\
-    \        if (t == 0) {\n            int l, r; cin >> l >> r;\n            int\
-    \ val = tree.erase(r);\n            tree.insert(l, val);\n        }\n        if\
-    \ (t == 1) {\n            int l, r; cin >> l >> r;\n            cout << tree.prod(l,\
-    \ r+1) << endl;\n        }\n        if (t == 2) {\n            int pos, val; cin\
-    \ >> pos >> val;\n            tree.apply(pos, pos+1, val);\n        }\n    }\n\
-    \    return 0;\n}\n"
+    \ i++) cin >> a[i];\n    RBLazySegtree<int,op,e,int,mapping,composition,id> tree(n);\n\
+    \    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n        if (t\
+    \ == 0) {\n            int l, r; cin >> l >> r;\n            int val = tree.erase(r);\n\
+    \            tree.insert(l, val);\n        }\n        if (t == 1) {\n        \
+    \    int l, r; cin >> l >> r;\n            cout << tree.prod(l, r+1) << endl;\n\
+    \        }\n        if (t == 2) {\n            int pos, val; cin >> pos >> val;\n\
+    \            tree.apply(pos, pos+1, val);\n        }\n    }\n    return 0;\n}\n"
   dependsOn:
   - atcoder/rb_lazysegtree.hpp
   - atcoder/rbtree_base.hpp
   isVerificationFile: true
   path: test/redblacklazysegtree.test.cpp
   requiredBy: []
-  timestamp: '2021-10-28 15:04:10+09:00'
+  timestamp: '2021-10-31 04:29:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/redblacklazysegtree.test.cpp

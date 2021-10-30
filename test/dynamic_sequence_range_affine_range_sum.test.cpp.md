@@ -39,7 +39,7 @@ data:
     \ + f.b * t.len, t.len};\n}\naffine composition(affine f, affine g) {\n    return\
     \ affine{f.a * g.a, f.b * g.a + g.b};\n}\n\nint main() {\n    int n, q; cin >>\
     \ n >> q;\n    vector<node> a(n);\n    for (int i = 0; i < n; i++) {\n       \
-    \ int x; cin >> x; a[i].x = x, a[i].len = 1;\n    }\n\n    rb_lazy_segtree_reversible<node,op,e,affine,mapping,composition,id>\
+    \ int x; cin >> x; a[i].x = x, a[i].len = 1;\n    }\n\n    RBLazySegtreeReversible<node,op,e,affine,mapping,composition,id>\
     \ tree(n+q);\n    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n\
     \        if (t == 0) {\n            int i, x; cin >> i >> x;\n            tree.insert(i,\
     \ node{x, 1});\n        }\n        if (t == 1) {\n            int i; cin >> i;\n\
@@ -60,7 +60,7 @@ data:
     \ + f.b * t.len, t.len};\n}\naffine composition(affine f, affine g) {\n    return\
     \ affine{f.a * g.a, f.b * g.a + g.b};\n}\n\nint main() {\n    int n, q; cin >>\
     \ n >> q;\n    vector<node> a(n);\n    for (int i = 0; i < n; i++) {\n       \
-    \ int x; cin >> x; a[i].x = x, a[i].len = 1;\n    }\n\n    rb_lazy_segtree_reversible<node,op,e,affine,mapping,composition,id>\
+    \ int x; cin >> x; a[i].x = x, a[i].len = 1;\n    }\n\n    RBLazySegtreeReversible<node,op,e,affine,mapping,composition,id>\
     \ tree(n+q);\n    tree.build(a);\n    while (q--) {\n        int t; cin >> t;\n\
     \        if (t == 0) {\n            int i, x; cin >> i >> x;\n            tree.insert(i,\
     \ node{x, 1});\n        }\n        if (t == 1) {\n            int i; cin >> i;\n\
@@ -79,7 +79,7 @@ data:
   isVerificationFile: true
   path: test/dynamic_sequence_range_affine_range_sum.test.cpp
   requiredBy: []
-  timestamp: '2021-10-28 15:04:10+09:00'
+  timestamp: '2021-10-31 04:29:38+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: test/dynamic_sequence_range_affine_range_sum.test.cpp
