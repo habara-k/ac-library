@@ -35,21 +35,21 @@ struct VectorPool {
 // https://suisen-cp.github.io/cp-library-cpp/library/datastructure/lazy_eval_dynamic_sequence.hpp
 
 template<class S, class Derived>
-struct rb_tree_node_base {
+struct RBTreeNodeBase {
     using ptr = Derived*;
     ptr l=nullptr, r=nullptr;
-    int size=1, rank=0;
+    int sz=1, rnk=0;
     bool red=false;
     S val;
-    rb_tree_node_base() = default;
-    explicit rb_tree_node_base(S val_) : val(val_) {}
-    rb_tree_node_base(ptr l_, ptr r_, int red_) :
-            l(l_), r(r_), size(l->size + r->size), rank(l->rank + !l->red), red(red_) {}
+    RBTreeNodeBase() = default;
+    explicit RBTreeNodeBase(S val_) : val(val_) {}
+    RBTreeNodeBase(ptr l_, ptr r_, int red_) :
+            l(l_), r(r_), sz(l->sz + r->sz), rnk(l->rnk + !l->red), red(red_) {}
     bool isLeaf() { return l == nullptr; }
 };
 
 template<class S, class Node>
-struct rb_tree_base {
+struct RBTreeBase {
     using ptr = typename Node::ptr;
     ptr root;
     // Ensure: root is null or valid
@@ -59,7 +59,7 @@ struct rb_tree_base {
     // - Red nodes are not adjacent
     // - The number of black nodes on the root-to-leaf path is constant
 
-    explicit rb_tree_base(int max_n) : pool(2*max_n-1) {}
+    explicit RBTreeBase(int max_n) : pool(2*max_n-1) {}
 
     int size() { return sz(root); }
 
@@ -110,8 +110,7 @@ struct rb_tree_base {
         assert(0 <= k and k <= sz(p));
         if (k == 0) return { nullptr, p };
         if (k == sz(p)) return { p, nullptr };
-        ptr l = p->l, r = p->r;
-        pool.free(p);
+        auto [l, r] = detach(p);
         if (k < sz(l)) {
             auto [a, b] = split(l, k);
             return { a, merge(b, asRoot(r)) };
@@ -128,11 +127,18 @@ private:
 
     VectorPool<Node> pool;
 
-    int sz(ptr p) { return p ? p->size : 0; }
+    int sz(ptr p) { return p ? p->sz : 0; }
 
     ptr build(const std::vector<S>& v, int l, int r) {
         if (r - l == 1) return pool.alloc(v[l]);
         return merge(build(v, l, (l+r)/2), build(v, (l+r)/2, r));
+    }
+
+    std::pair<ptr, ptr> detach(ptr p) {
+        assert(p != nullptr);
+        ptr l = p->l, r = p->r;
+        pool.free(p);
+        return { l, r };
     }
 
     ptr mergeSub(ptr a, ptr b) {
@@ -140,29 +146,24 @@ private:
         // - asRoot(a), asRoot(b) is valid
         // Ensure:
         // - asRoot(returned node) is valid
-        // - (returned node)->rank = max(a->rank, b->rank)
         assert(a != nullptr);
         assert(b != nullptr);
-        if (a->rank < b->rank or (a->rank == b->rank and b->red)) {
-            ptr l = b->l, r = b->r;
+        if (a->rnk < b->rnk) {
             bool red = b->red;
-            pool.free(b);
+            auto [l, r] = detach(b);
             ptr c = mergeSub(a, l);
             if (red or !c->red or !c->l->red) return pool.alloc(c, r, red);
             if (r->red) return pool.alloc(asRoot(c), asRoot(r), RED);
-            ptr cl = c->l, cr = c->r;
-            pool.free(c);
+            auto [cl, cr] = detach(c);
             return pool.alloc(cl, pool.alloc(cr, r, RED), BLACK);
         }
-        if (a->rank > b->rank or (a->rank == b->rank and a->red)) {
-            ptr l = a->l, r = a->r;
+        if (a->rnk > b->rnk) {
             bool red = a->red;
-            pool.free(a);
+            auto [l, r] = detach(a);
             ptr c = mergeSub(r, b);
             if (red or !c->red or !c->r->red) return pool.alloc(l, c, red);
             if (l->red) return pool.alloc(asRoot(l), asRoot(c), RED);
-            ptr cl = c->l, cr = c->r;
-            pool.free(c);
+            auto [cl, cr] = detach(c);
             return pool.alloc(pool.alloc(l, cl, RED), cr, BLACK);
         }
         return pool.alloc(a, b, RED);

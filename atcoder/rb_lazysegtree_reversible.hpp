@@ -6,15 +6,15 @@
 namespace atcoder {
 
 template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>> {
-    using Base = rb_tree_node_base<S, rb_lazy_segtree_reversible_node>;
+struct RBLazySegtreeReversibleNode : public RBTreeNodeBase<S, RBLazySegtreeReversibleNode<S,op,F,mapping,composition,id>> {
+    using Base = RBTreeNodeBase<S, RBLazySegtreeReversibleNode>;
     using Base::Base, Base::l, Base::r, Base::val, Base::isLeaf;
     F lazy = id();
     bool rev = false;
     using ptr = typename Base::ptr;
-    rb_lazy_segtree_reversible_node(ptr l_, ptr r_, int red_) :
+    RBLazySegtreeReversibleNode(ptr l_, ptr r_, int red_) :
             Base(l_, r_, red_) { val = op(l->val, r->val); }
-    ~rb_lazy_segtree_reversible_node() {
+    ~RBLazySegtreeReversibleNode() {
         if (lazy != id()) {
             assert(!isLeaf());
             l = applied(l, lazy);
@@ -41,9 +41,9 @@ struct rb_lazy_segtree_reversible_node : public rb_tree_node_base<S, rb_lazy_seg
 };
 
 template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_reversible : public rb_tree_base<S, rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>> {
-    using Node = rb_lazy_segtree_reversible_node<S,op,F,mapping,composition,id>;
-    using Base = rb_tree_base<S, Node>;
+struct RBLazySegtreeReversible : public RBTreeBase<S, RBLazySegtreeReversibleNode<S,op,F,mapping,composition,id>> {
+    using Node = RBLazySegtreeReversibleNode<S,op,F,mapping,composition,id>;
+    using Base = RBTreeBase<S, Node>;
     using Base::Base, Base::size;
 private:
     using Base::split, Base::merge, Base::root;
@@ -52,27 +52,27 @@ public:
         assert(0 <= l and l <= r and r <= size());
         if (l == r) return e();
 
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        S val = c->val;
-        root = merge(a, merge(c, b));
+        auto [tmp, c] = split(root, r);
+        auto [a, b] = split(tmp, l);
+        S val = b->val;
+        root = merge(merge(a, b), c);
         return val;
     }
     void apply(int l, int r, F lazy) {
         assert(0 <= l and l <= r and r <= size());
         if (l == r) return;
 
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        root = merge(a, merge(Node::applied(c, lazy), b));
+        auto [tmp, c] = split(root, r);
+        auto [a, b] = split(tmp, l);
+        root = merge(merge(a, Node::applied(b, lazy)), c);
     }
     void reverse(int l, int r) {
         assert(0 <= l and l <= r and r <= size());
         if (l == r) return;
 
-        auto [a, tmp] = split(root, l);
-        auto [c, b] = split(tmp, r-l);
-        root = merge(a, merge(Node::reversed(c), b));
+        auto [tmp, c] = split(root, r);
+        auto [a, b] = split(tmp, l);
+        root = merge(merge(a, Node::reversed(b)), c);
     }
 };
 
