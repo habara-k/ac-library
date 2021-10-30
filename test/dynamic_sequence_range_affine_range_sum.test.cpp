@@ -39,7 +39,7 @@ int main() {
         int x; cin >> x; a[i].x = x, a[i].len = 1;
     }
 
-    rb_lazy_segtree_reversible<node,op,e,affine,mapping,composition,id> tree(n+q);
+    RBLazySegtreeReversible<node,op,e,affine,mapping,composition,id> tree(n+q);
     tree.build(a);
     while (q--) {
         int t; cin >> t;

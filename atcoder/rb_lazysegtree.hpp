@@ -6,15 +6,15 @@
 namespace atcoder {
 
 template<class S, S(*op)(S,S), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>> {
-    using Base = rb_tree_node_base<S, rb_lazy_segtree_node>;
+struct RBLazySegtreeNode : public RBTreeNodeBase<S, RBLazySegtreeNode<S,op,F,mapping,composition,id>> {
+    using Base = RBTreeNodeBase<S, RBLazySegtreeNode>;
     using Base::Base, Base::l, Base::r, Base::val, Base::isLeaf;
     F lazy = id();
     using ptr = typename Base::ptr;
-    rb_lazy_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
+    RBLazySegtreeNode(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
         val = op(l->val, r->val);
     }
-    ~rb_lazy_segtree_node() {
+    ~RBLazySegtreeNode() {
         if (lazy != id()) {
             assert(!isLeaf());
             l = applied(l, lazy);
@@ -30,9 +30,9 @@ struct rb_lazy_segtree_node : public rb_tree_node_base<S, rb_lazy_segtree_node<S
 };
 
 template<class S, S(*op)(S,S), S(*e)(), class F, S(*mapping)(F,S), F(*composition)(F,F), F(*id)()>
-struct rb_lazy_segtree : public rb_tree_base<S, rb_lazy_segtree_node<S,op,F,mapping,composition,id>> {
-    using Node = rb_lazy_segtree_node<S,op,F,mapping,composition,id>;
-    using Base = rb_tree_base<S, Node>;
+struct RBLazySegtree : public RBTreeBase<S, RBLazySegtreeNode<S,op,F,mapping,composition,id>> {
+    using Node = RBLazySegtreeNode<S,op,F,mapping,composition,id>;
+    using Base = RBTreeBase<S, Node>;
     using Base::Base, Base::size;
 private:
     using Base::split, Base::merge, Base::root;

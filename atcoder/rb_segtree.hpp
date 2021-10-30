@@ -6,19 +6,19 @@
 namespace atcoder {
 
 template<class S, S(*op)(S,S)>
-struct rb_segtree_node : public rb_tree_node_base<S, rb_segtree_node<S, op>> {
-    using Base = rb_tree_node_base<S, rb_segtree_node>;
+struct RBSegtreeNode : public RBTreeNodeBase<S, RBSegtreeNode<S, op>> {
+    using Base = RBTreeNodeBase<S, RBSegtreeNode>;
     using Base::Base;
     using ptr = typename Base::ptr;
-    rb_segtree_node(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
+    RBSegtreeNode(ptr l_, ptr r_, int red_) : Base(l_, r_, red_) {
         Base::val = op(Base::l->val, Base::r->val);
     }
 };
 
 template<class S, S(*op)(S,S), S(*e)()>
-struct rb_segtree : public rb_tree_base<S, rb_segtree_node<S,op>> {
-    using Node = rb_segtree_node<S,op>;
-    using Base = rb_tree_base<S, Node>;
+struct RBSegtree : public RBTreeBase<S, RBSegtreeNode<S,op>> {
+    using Node = RBSegtreeNode<S,op>;
+    using Base = RBTreeBase<S, Node>;
     using Base::Base, Base::size;
 private:
     using Base::split, Base::merge, Base::root;
